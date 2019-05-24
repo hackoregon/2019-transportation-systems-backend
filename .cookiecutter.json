@@ -1,0 +1,16 @@
+{
+    "_template": "gh:hackoregon/2019-backend-cookiecutter-django", 
+    "data_science_repo_name": "Name of repo where data science work is contained", 
+    "data_science_repo_url": "URL of repo where data science work is contained", 
+    "email": "ed.borasky@hackoregon.org", 
+    "full_name": "M. Edward (Ed) Borasky", 
+    "gis_project": "True", 
+    "github_repo": "2019-transportation-systems-backend", 
+    "github_username": "znmeb", 
+    "hack_oregon_team": "Transportation Systems", 
+    "project_short_description": "2019 Transportation Systems APIs", 
+    "python_package_namespace": "hackoregon_transportation_systems", 
+    "python_subpackage": "toad", 
+    "version": "0.1.0", 
+    "year": "2019"
+}

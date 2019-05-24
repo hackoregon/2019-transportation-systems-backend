@@ -1,0 +1,7 @@
+# Imports common.txt packages
+-r common.txt
+
+# Import local package in development mode
+-e ./hackoregon_transportation_systems
+
+pytest
