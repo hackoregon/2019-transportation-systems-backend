@@ -6,13 +6,13 @@ if [ $# == 0 ]; then usage; fi
 while getopts ":dpl" opt; do
     case "$opt" in
         d)
-          docker-compose build --build-arg DEBUG=true
+          sudo docker-compose build --build-arg DEBUG=true
           ;;
         p)
-          docker-compose build
+          sudo docker-compose build
           ;;
         l)
-          docker-compose -f local-postgis.yml build --build-arg DEBUG=true
+          sudo docker-compose -f local-postgis.yml build --build-arg DEBUG=true -f local-postgis.yml
           ;;
         *)
           usage

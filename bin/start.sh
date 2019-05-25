@@ -7,15 +7,15 @@ while getopts ":dpl" opt; do
     case "$opt" in
         d)
           DEBUG=true
-          docker-compose up
+          sudo docker-compose up
           ;;
         p)
           DEBUG=false
-          docker-compose up
+          sudo docker-compose up
           ;;
         l)
           DEBUG=true
-          docker-compose -f local-postgis.yml up
+          sudo docker-compose -f local-postgis.yml up
           ;;
         *)
           usage
