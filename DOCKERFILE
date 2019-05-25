@@ -15,6 +15,6 @@ RUN python
 RUN mkdir src_files
 
 COPY bin /code/src_files/bin/
-RUN chmod +x *.py
+RUN chmod +x *.py /code/src_files/bin/*.sh /code/bin/*.sh
 
 ENTRYPOINT [ "/code/src_files/bin/docker-entrypoint.sh" ]
