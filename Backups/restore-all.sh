@@ -8,7 +8,7 @@ then
     echo "Creating '${DJANGO_POSTGRES_NAME}' with owner '${DJANGO_POSTGRES_USER}'"
     createdb --owner=${DJANGO_POSTGRES_USER} ${DJANGO_POSTGRES_NAME}
     psql --username=${DJANGO_POSTGRES_USER} --dbname=${DJANGO_POSTGRES_NAME} \
-      --command="CREATE EXTENSION postgis CASCADE;"
+      --command="CREATE EXTENSION IF NOT EXISTS postgis CASCADE;"
     pg_restore --dbname=${DJANGO_POSTGRES_NAME} $file
     echo "Restore completed"
   done
