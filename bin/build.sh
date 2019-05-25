@@ -12,7 +12,7 @@ while getopts ":dpl" opt; do
           sudo docker-compose build
           ;;
         l)
-          sudo docker-compose -f local-postgis.yml build --build-arg DEBUG=true -f local-postgis.yml
+          sudo docker-compose -f local-postgis.yml build --build-arg DEBUG=true
           ;;
         *)
           usage
