@@ -7,7 +7,7 @@ then
 else
   echo "Creating database user '${DJANGO_POSTGRES_USER}'"
   createuser --superuser ${DJANGO_POSTGRES_USER}
-  command="ALTER USER \"${DJANGO_POSTGRES_USER}\" WITH PASSWORD '${DJANGO_POSTGRES_PASSWORD}';"
+  command="ALTER USER \"${DJANGO_POSTGRES_USER}\" WITH PASSWORD '${POSTGRES_PASSWORD}';"
   psql -c "$command"
 fi
 echo "User creation completed"
