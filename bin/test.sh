@@ -15,7 +15,8 @@ while getopts ":dpl" opt; do
           ;;
         l)
           DEBUG=true
-          sudo docker-compose -f local-postgis.yml run --name test-api --entrypoint /code/bin/test-entrypoint.sh   --rm 
+          sudo docker-compose -f local-postgis.yml run --name test-api \
+            --entrypoint /code/bin/test-entrypoint.sh   --rm 
           ;;
         *)
           usage
