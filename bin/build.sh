@@ -6,10 +6,10 @@ if [ $# == 0 ]; then usage; fi
 while getopts ":dp" opt; do
     case "$opt" in
         d)
-          docker-compose build --build-arg DEBUG=true
+          sudo docker-compose build --build-arg DEBUG=true
           ;;
         p)
-          docker-compose build
+          sudo docker-compose build
           ;;
         *)
           usage
