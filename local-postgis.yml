@@ -11,7 +11,6 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - PROJECT_NAME=${PROJECT_NAME}
       - DEBUG=${DEBUG}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_NAME=${POSTGRES_NAME}
@@ -29,8 +28,6 @@ services:
     ports:
       - 5439:5432
     environment:
-      - PROJECT_NAME=${PROJECT_NAME}
-      - DEBUG=${DEBUG}
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
       - DJANGO_POSTGRES_USER=${POSTGRES_USER}
@@ -38,4 +35,3 @@ services:
       - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}

@@ -1,5 +1,5 @@
 FROM postgres:11
-LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+LABEL maintainer="M. Edward (Ed) Borasky <ed.borasky@hackoregon.org>"
 
 # Install apt packages
 RUN apt-get update \
