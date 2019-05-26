@@ -4,11 +4,12 @@ if [ `( ls -1 /Backups/*.backup 2>/dev/null || true ) | wc -l` -gt "0" ]
 then
   for file in /Backups/*.backup
   do
-    echo "Restoring $file"
-    echo "Creating '${DJANGO_POSTGRES_NAME}' with owner '${DJANGO_POSTGRES_USER}'"
+    echo "Creating database '${DJANGO_POSTGRES_NAME}' with owner '${DJANGO_POSTGRES_USER}'"
     createdb --owner=${DJANGO_POSTGRES_USER} ${DJANGO_POSTGRES_NAME}
+    echo "Creating 'postgis' extension in ${DJANGO_POSTGRES_USER}"
     psql --username=${DJANGO_POSTGRES_USER} --dbname=${DJANGO_POSTGRES_NAME} \
       --command="CREATE EXTENSION IF NOT EXISTS postgis CASCADE;"
+    echo "Restoring $file"
     pg_restore --dbname=${DJANGO_POSTGRES_NAME} $file
     echo "Restore completed"
   done
