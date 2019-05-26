@@ -61,8 +61,7 @@ If you're on Windows or a Mac this will be in a virtual disk somewhere.
 the images. Open an issue if it doesn't work.
 6. Type `bin/start.sh -l`. The containers will start up. The database
 restore takes quite a bit of time; you'll see the API container polling
-it every five seconds. That's annoying; I should change it to every
-minute. ;-)
+it every minute.
 7. When the database comes up, the API container will run a bunch of
 stuff and then start a server. You should see the Django success page
 at http://localhost:8000.
