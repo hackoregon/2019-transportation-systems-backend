@@ -54,7 +54,7 @@ it anyway to get into the habit.
 3. Copy the `tadpole.backup` file into `Backups/`. This is a small
 version (just September 2017 and September 2018) of our TOAD data.
 4. Make sure your Docker host is working and has plenty of space.
-This dataset requires at least 11 GB. On my machines the Docker
+This dataset requires at least 12 GB. On my machines the Docker
 volume space lives on 128 GB SSDs so I have to watch this stuff.
 If you're on Windows or a Mac this will be in a virtual disk somewhere.
 5. Open a command prompt and type `bin/build.sh -l`. This will build
