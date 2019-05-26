@@ -71,6 +71,11 @@ the email address and password you set in `.env`. Then right-click
 on `Servers`. You'll see `local_postgis`; that's the local database
 container. When you click on that, it will ask you for a password.
 That's `POSTGRES_PASSWORD` from the `.env` file - copy and paste.
+9. The `local_postgis` container is listening on `localhost:5439`.
+Both `postgres` and `transportation2019` are database superusers
+with the password you set in `POSTGRES_PASSWORD`. So you can connect
+to the database with a Jupyter notebook or RStudio notebook and do
+data science.
 
 # Credits
 
