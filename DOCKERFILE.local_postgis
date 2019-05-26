@@ -1,5 +1,6 @@
-FROM postgres:11
+FROM docker.io/library/postgres:11
 LABEL maintainer="M. Edward (Ed) Borasky <ed.borasky@hackoregon.org>"
+# documentation: https://hub.docker.com/_/postgres
 
 # Install apt packages
 RUN apt-get update \
