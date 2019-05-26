@@ -5,7 +5,6 @@ services:
       context: .
       dockerfile: DOCKERFILE
     image: api
-    command: ./bin/docker-entrypoint.sh
     volumes:
       - .:/code/src_files/
     ports:
