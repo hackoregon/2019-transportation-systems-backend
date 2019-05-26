@@ -35,7 +35,10 @@ services:
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   pgadmin4:
-    image: docker.io/dpage/pgadmin4
+    build:
+      context: .
+      dockerfile: DOCKERFILE.pgadmin4
+    image: pgadmin4
     ports: 
     - 8686:8686
     environment:

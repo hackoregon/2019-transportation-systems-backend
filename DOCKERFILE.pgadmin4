@@ -1,0 +1,5 @@
+FROM docker.io/dpage/pgadmin4:latest
+LABEL maintainer="M. Edward (Ed) Borasky <ed.borasky@hackoregon.org>"
+
+# add the servers.json
+COPY ./pgadmin4-config-files/servers.json /pgadmin4
