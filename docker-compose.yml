@@ -5,13 +5,11 @@ services:
       context: .
       dockerfile: DOCKERFILE
     image: api
-    command: ./bin/docker-entrypoint.sh
     volumes:
       - .:/code/src_files/
     ports:
       - "8000:8000"
     environment:
-      - PROJECT_NAME
       - DEBUG=${DEBUG}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_NAME=${POSTGRES_NAME}

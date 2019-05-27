@@ -1,0 +1,49 @@
+version: '3.4'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: DOCKERFILE
+    image: api
+    volumes:
+      - .:/code/src_files/
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=${DEBUG}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+    depends_on:
+      - local_postgis
+  local_postgis:
+    build:
+      context: .
+      dockerfile: DOCKERFILE.local_postgis
+    image: local_postgis
+    ports:
+      - 5439:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - DJANGO_POSTGRES_USER=${POSTGRES_USER}
+      - DJANGO_POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  pgadmin4:
+    build:
+      context: .
+      dockerfile: DOCKERFILE.pgadmin4
+    image: pgadmin4
+    ports: 
+    - 8686:8686
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT=8686
+    depends_on:
+      - local_postgis
