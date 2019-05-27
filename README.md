@@ -58,7 +58,7 @@ This dataset requires at least 12 GB. On my machines the Docker
 volume space lives on 128 GB SSDs so I have to watch this stuff.
 If you're on Windows or a Mac this will be in a virtual disk somewhere.
 5. Open a command prompt and type `bin/build.sh -l`. This will build
-the images. Open an issue if it doesn't work.
+the images. Open an issue if it doesn't work. NOTE: This command (and the one below) runs `sudo` in the background, so you will likely be asked for your log-in password to provide permission to begin. Don't confuse this with the passwords defined in the `.env` file.
 6. Type `bin/start.sh -l`. The containers will start up. The database
 restore takes quite a bit of time; you'll see the API container polling
 it every minute.
