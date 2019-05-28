@@ -18,8 +18,7 @@ The full documentation is at <<http://hackoregon.github.io/>>2019-transportation
 
 # Data Sources
 
-# Quickstart to install package in your own Django Project (Non-Hack
-Oregon Workflow)
+# Quickstart to install package in your own Django Project (Non-HackOregon Workflow)
 
 Install hackoregon_transportation_systems:
 
