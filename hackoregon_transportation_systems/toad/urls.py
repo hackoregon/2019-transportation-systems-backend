@@ -6,4 +6,4 @@ router = DefaultRouter()
 router.register(r"bus-all-stops", views.BusAllStopsViewSet)
 router.register(r"bus-passenger-stops", views.BusPassengerStopsViewSet)
 
-urlpatterns = [url(r"^/", include(router.urls))]
+urlpatterns = [url(r"^", include(router.urls))]
