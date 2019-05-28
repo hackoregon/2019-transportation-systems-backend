@@ -27,11 +27,11 @@ Install hackoregon_transportation_systems:
 
 Add subpackages to your `INSTALLED_APPS`:
 
-`` ` python INSTALLED_APPS = (     ...     'toad',     ... ) ```
+``` python INSTALLED_APPS = (     ...     'toad',     ... ) ```
 
 Add hackoregon_transportation_systems's URL patterns:
 
-`` ` python from hackoregon_transportation_systems.toad import urls as toad_urls   urlpatterns = [     ...     url(r'^', include(toad_urls)),     ... ] ```
+``` python from hackoregon_transportation_systems.toad import urls as toad_urls   urlpatterns = [     ...     url(r'^', include(toad_urls)),     ... ] ```
 
 Setup your database with a matching schema
 
