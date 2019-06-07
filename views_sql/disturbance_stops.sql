@@ -1,5 +1,9 @@
-DROP MATERIALIZED VIEW IF EXISTS public.disturbance_stops CASCADE;
-CREATE MATERIALIZED VIEW public.disturbance_stops
+DROP INDEX IF EXISTS bus_trips_event_no_trip_idx;
+CREATE INDEX bus_trips_event_no_trip_idx ON bus_trips (event_no_trip);
+DROP INDEX IF EXISTS bus_all_stops_event_no_trip_idx;
+CREATE INDEX bus_all_stops_event_no_trip_idx ON bus_all_stops (event_no_trip);
+DROP MATERIALIZED VIEW IF EXISTS disturbance_stops CASCADE;
+CREATE MATERIALIZED VIEW disturbance_stops
 AS
 SELECT bus_all_stops.opd_date, date_part('dow', bus_all_stops.opd_date) AS day_of_week,
   bus_all_stops.act_arr_time, bus_all_stops.act_dep_time,
@@ -16,5 +20,5 @@ WHERE stop_type = 3
 
 WITH DATA;
 
-ALTER TABLE public.disturbance_stops
+ALTER TABLE disturbance_stops
     OWNER TO transportation2019;
