@@ -7,7 +7,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG").lower() == "true"
-
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
@@ -45,6 +44,7 @@ STATIC_URL = "/hackoregon_transportation_systems/static/"
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 10,
+    "PAGE_SIZE": 100,
     "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.NamespaceVersioning",
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
 }
