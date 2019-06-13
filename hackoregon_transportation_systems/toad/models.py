@@ -13,28 +13,28 @@ class AuthGroup(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'auth_group'
+        db_table = "auth_group"
 
 
 class AuthGroupPermissions(models.Model):
     group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+    permission = models.ForeignKey("AuthPermission", models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = 'auth_group_permissions'
-        unique_together = (('group', 'permission'),)
+        db_table = "auth_group_permissions"
+        unique_together = (("group", "permission"),)
 
 
 class AuthPermission(models.Model):
     name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
+    content_type = models.ForeignKey("DjangoContentType", models.DO_NOTHING)
     codename = models.CharField(max_length=100)
 
     class Meta:
         managed = False
-        db_table = 'auth_permission'
-        unique_together = (('content_type', 'codename'),)
+        db_table = "auth_permission"
+        unique_together = (("content_type", "codename"),)
 
 
 class AuthUser(models.Model):
@@ -51,7 +51,7 @@ class AuthUser(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'auth_user'
+        db_table = "auth_user"
 
 
 class AuthUserGroups(models.Model):
@@ -60,8 +60,8 @@ class AuthUserGroups(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
+        db_table = "auth_user_groups"
+        unique_together = (("user", "group"),)
 
 
 class AuthUserUserPermissions(models.Model):
@@ -70,8 +70,8 @@ class AuthUserUserPermissions(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
+        db_table = "auth_user_user_permissions"
+        unique_together = (("user", "permission"),)
 
 
 class BusAllStops(models.Model):
@@ -95,7 +95,7 @@ class BusAllStops(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'bus_all_stops'
+        db_table = "bus_all_stops"
 
 
 class BusPassengerStops(models.Model):
@@ -119,7 +119,7 @@ class BusPassengerStops(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'bus_passenger_stops'
+        db_table = "bus_passenger_stops"
 
 
 class BusTrips(models.Model):
@@ -137,7 +137,27 @@ class BusTrips(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'bus_trips'
+        db_table = "bus_trips"
+
+
+class DisturbanceStops(models.Model):
+    opd_date = models.DateField(blank=True, null=True)
+    day_of_week = models.FloatField(blank=True, null=True)
+    act_arr_time = models.DateTimeField(blank=True, null=True)
+    act_dep_time = models.DateTimeField(blank=True, null=True)
+    start_quarter_hour = models.FloatField(blank=True, null=True)
+    end_quarter_hour = models.FloatField(blank=True, null=True)
+    duration = models.DurationField(blank=True, null=True)
+    line_id = models.IntegerField(blank=True, null=True)
+    pattern_direction = models.TextField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    geom_point_4326 = models.PointField(blank=True, null=True)
+    id = models.BigIntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = "disturbance_stops"
 
 
 class DjangoAdminLog(models.Model):
@@ -146,12 +166,14 @@ class DjangoAdminLog(models.Model):
     object_repr = models.CharField(max_length=200)
     action_flag = models.SmallIntegerField()
     change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    content_type = models.ForeignKey(
+        "DjangoContentType", models.DO_NOTHING, blank=True, null=True
+    )
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = 'django_admin_log'
+        db_table = "django_admin_log"
 
 
 class DjangoContentType(models.Model):
@@ -160,8 +182,8 @@ class DjangoContentType(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'django_content_type'
-        unique_together = (('app_label', 'model'),)
+        db_table = "django_content_type"
+        unique_together = (("app_label", "model"),)
 
 
 class DjangoMigrations(models.Model):
@@ -171,7 +193,7 @@ class DjangoMigrations(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'django_migrations'
+        db_table = "django_migrations"
 
 
 class DjangoSession(models.Model):
@@ -181,7 +203,7 @@ class DjangoSession(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'django_session'
+        db_table = "django_session"
 
 
 class RailPassengerStops(models.Model):
@@ -205,4 +227,5 @@ class RailPassengerStops(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'rail_passenger_stops'
+        db_table = "rail_passenger_stops"
+
