@@ -11,5 +11,16 @@ router.register(
 
 urlpatterns = [
     url(r"^", include(router.urls)),
-    url(r"^disturbance-stops/(?P<line>[0-9]+)/$", views.DisturbanceStopsViewSet),
+    url(
+        r"""^disturbance-stops/
+        (?P<line>[0-9]+)
+        (?P<direction>[A-Z]+)
+        (?P<num>[0-9]+)
+        (?P<start_quarter_hour>[0-9]*\.?[0-9]+)
+        (?P<end_quarter_hour>[0-9]*\.?[0-9]+)
+        (?P<start_month>[A-Z]+)
+        (?P<end_month>[A-Z]+)
+        (?P<year>[A-Z]+)/$""",
+        views.DisturbanceStopsViewSet,
+    ),
 ]
