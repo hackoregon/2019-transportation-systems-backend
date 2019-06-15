@@ -8,6 +8,9 @@ router.register(r"bus-passenger-stops", views.BusPassengerStopsViewSet)
 router.register(
     r"disturbance-stops", views.DisturbanceStopsViewSet, basename="disturbance-stops"
 )
+router.register(
+    r"traffic-signals", views.TrafficSignalsViewSet, basename="traffic-signals"
+)
 
 urlpatterns = [
     url(r"^", include(router.urls)),
