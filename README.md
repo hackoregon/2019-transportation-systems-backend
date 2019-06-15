@@ -50,8 +50,7 @@ For project development work, tests will be run in docker container
 using the bin/test.sh script:
 
 # Local development workflow
-1. Clone this repository. For the moment, everything is still in the
-branch `create-local-database-container`, so check out that branch.
+1. Clone this repository.
 2. Open a command terminal. Copy the file `env.sample` to `.env`.
 Change the passwords if you want to - that's really not necessary
 since the listeners are all on your workstation / laptop. But do
