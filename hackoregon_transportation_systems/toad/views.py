@@ -133,7 +133,7 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
 
 class TrafficSignalsViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    This viewset will provide a list of scheduled stops along a Trimet line.
+    This viewset will provide a list of all the traffic signals in the Portland area.
     """
 
     queryset = TrafficSignals.objects.all()
