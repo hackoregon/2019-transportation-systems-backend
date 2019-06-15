@@ -1,9 +1,10 @@
 from rest_framework import viewsets
-from toad.models import BusAllStops, BusPassengerStops, DisturbanceStops
+from toad.models import BusAllStops, TrafficSignals, BusPassengerStops, DisturbanceStops
 from toad.serializers import (
     BusAllStopsSerializer,
     BusPassengerStopsSerializer,
     DisturbanceStopsSerializer,
+    TrafficSignalsSerializer,
 )
 
 
@@ -50,16 +51,19 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         start_quarter_hour = self.request.query_params.get("start_quarter_hour", None)
         end_quarter_hour = self.request.query_params.get("end_quarter_hour", None)
 
-        time_range = [int(start_quarter_hour), int(end_quarter_hour)]
-        month_range = [int(start_month), int(end_month)]
+        try:
+            time_range = [int(start_quarter_hour), int(end_quarter_hour)]
+            month_range = [int(start_month), int(end_month)]
 
-        queryset = queryset.filter(
-            opd_date__month__range=month_range,
-            opd_date__year=int(year),
-            pattern_direction=direction,
-            start_quarter_hour__range=time_range,
-            end_quarter_hour__range=time_range,
-        )
+            queryset = queryset.filter(
+                opd_date__month__range=month_range,
+                opd_date__year=int(year),
+                pattern_direction=direction,
+                start_quarter_hour__range=time_range,
+                end_quarter_hour__range=time_range,
+            )
+        except TypeError:
+            pass
 
         """
             line_id__in=[int(l) for l in lines.split(",")],
@@ -125,3 +129,12 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         #     queryset = queryset[: int(num_results)]
 
         return queryset
+
+
+class TrafficSignalsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset will provide a list of scheduled stops along a Trimet line.
+    """
+
+    queryset = TrafficSignals.objects.all()
+    serializer_class = TrafficSignalsSerializer
