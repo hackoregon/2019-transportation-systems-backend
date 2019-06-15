@@ -229,3 +229,57 @@ class RailPassengerStops(models.Model):
         managed = False
         db_table = "rail_passenger_stops"
 
+
+class TrafficSignals(models.Model):
+    ogc_fid = models.AutoField(primary_key=True)
+    objectid = models.DecimalField(
+        max_digits=10, decimal_places=0, blank=True, null=True
+    )
+    assetid = models.CharField(max_length=80, blank=True, null=True)
+    owner = models.CharField(max_length=80, blank=True, null=True)
+    maintresp = models.CharField(max_length=80, blank=True, null=True)
+    locationid = models.CharField(max_length=80, blank=True, null=True)
+    imagepath = models.CharField(max_length=120, blank=True, null=True)
+    powersuppl = models.CharField(max_length=80, blank=True, null=True)
+    ismetered = models.CharField(max_length=80, blank=True, null=True)
+    engineer = models.CharField(max_length=80, blank=True, null=True)
+    electricia = models.CharField(max_length=80, blank=True, null=True)
+    signalnum = models.DecimalField(
+        max_digits=10, decimal_places=0, blank=True, null=True
+    )
+    signaltype = models.DecimalField(
+        max_digits=10, decimal_places=0, blank=True, null=True
+    )
+    actuation = models.CharField(max_length=80, blank=True, null=True)
+    roadauthor = models.CharField(max_length=80, blank=True, null=True)
+    signalsyst = models.CharField(max_length=80, blank=True, null=True)
+    primarycon = models.CharField(max_length=80, blank=True, null=True)
+    hubloc = models.CharField(max_length=80, blank=True, null=True)
+    commsource = models.DecimalField(
+        max_digits=10, decimal_places=0, blank=True, null=True
+    )
+    masterloc = models.CharField(max_length=80, blank=True, null=True)
+    emergencyp = models.CharField(max_length=80, blank=True, null=True)
+    railroadpe = models.CharField(max_length=80, blank=True, null=True)
+    buspe = models.CharField(max_length=80, blank=True, null=True)
+    lightrailp = models.CharField(max_length=80, blank=True, null=True)
+    otherpe = models.CharField(max_length=80, blank=True, null=True)
+    controller = models.CharField(max_length=80, blank=True, null=True)
+    cabinettyp = models.CharField(max_length=80, blank=True, null=True)
+    cabinetcha = models.CharField(max_length=80, blank=True, null=True)
+    controll_1 = models.CharField(max_length=80, blank=True, null=True)
+    softwarety = models.CharField(max_length=80, blank=True, null=True)
+    softwarere = models.CharField(max_length=80, blank=True, null=True)
+    temptiming = models.CharField(max_length=80, blank=True, null=True)
+    servicevol = models.DecimalField(
+        max_digits=10, decimal_places=0, blank=True, null=True
+    )
+    lastremode = models.CharField(max_length=80, blank=True, null=True)
+    standardsc = models.DecimalField(
+        max_digits=10, decimal_places=0, blank=True, null=True
+    )
+    wkb_geometry = models.PointField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = "traffic_signals"
