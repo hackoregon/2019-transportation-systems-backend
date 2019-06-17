@@ -30,6 +30,6 @@ class DisturbanceStopsSerializer(serializers.GeoFeatureModelSerializer):
 class TrafficSignalsSerializer(serializers.GeoFeatureModelSerializer):
     class Meta:
         model = TrafficSignals
-        fields = "__all__"
+        fields = ("wkb_geometry", "ogc_fid")
         geo_field = "wkb_geometry"
         id = "ogc_fid"
