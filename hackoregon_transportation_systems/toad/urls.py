@@ -8,17 +8,7 @@ router.register(
     r"busPassengerStops", views.BusPassengerStopsViewSet, basename="bus-passenger-stops"
 )
 router.register(
-    r"""^DisturbanceStops/
-    (?P<line>[0-9]+)
-    (?P<direction>[A-Z]+)
-    (?P<num>[0-9]+)
-    (?P<start_quarter_hour>[0-9]*\.?[0-9]+)
-    (?P<end_quarter_hour>[0-9]*\.?[0-9]+)
-    (?P<start_month>[A-Z]+)
-    (?P<end_month>[A-Z]+)
-    (?P<year>[A-Z]+)/$""",
-    views.DisturbanceStopsViewSet,
-    basename="disturbance-stops",
+    r"disturbanceStops", views.DisturbanceStopsViewSet, basename="disturbance-stops"
 )
 router.register(
     r"trafficSignals", views.TrafficSignalsViewSet, basename="traffic-signals"
