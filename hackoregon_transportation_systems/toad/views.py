@@ -89,15 +89,13 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
     This viewset will provide a list of all disturbance stops of busses.
     """
 
-    # queryset = DisturbanceStops.objects.all()
     serializer_class = DisturbanceStopsSerializer
     filter_backends = (DisturbanceStopsFilter,)
 
     def get_queryset(self):
         """
-        Optionally filters against query parameters in the URL.
+        Filters against query parameters in the URL.
         """
-        # queryset = DisturbanceStops.objects.all()
 
         print(self.request.query_params)
         filters = {}
