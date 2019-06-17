@@ -3,27 +3,15 @@ from rest_framework.routers import DefaultRouter
 from toad import views
 
 router = DefaultRouter()
-router.register(r"bus-all-stops", views.BusAllStopsViewSet)
-router.register(r"bus-passenger-stops", views.BusPassengerStopsViewSet)
+router.register(r"busAllStops", views.BusAllStopsViewSet, basename="bus-all-stops")
 router.register(
-    r"disturbance-stops", views.DisturbanceStopsViewSet, basename="disturbance-stops"
+    r"busPassengerStops", views.BusPassengerStopsViewSet, basename="bus-passenger-stops"
 )
 router.register(
-    r"traffic-signals", views.TrafficSignalsViewSet, basename="traffic-signals"
+    r"disturbanceStops", views.DisturbanceStopsViewSet, basename="disturbance-stops"
+)
+router.register(
+    r"trafficSignals", views.TrafficSignalsViewSet, basename="traffic-signals"
 )
 
-urlpatterns = [
-    url(r"^", include(router.urls)),
-    url(
-        r"""^disturbance-stops/
-        (?P<line>[0-9]+)
-        (?P<direction>[A-Z]+)
-        (?P<num>[0-9]+)
-        (?P<start_quarter_hour>[0-9]*\.?[0-9]+)
-        (?P<end_quarter_hour>[0-9]*\.?[0-9]+)
-        (?P<start_month>[A-Z]+)
-        (?P<end_month>[A-Z]+)
-        (?P<year>[A-Z]+)/$""",
-        views.DisturbanceStopsViewSet,
-    ),
-]
+urlpatterns = [url(r"^", include(router.urls))]
