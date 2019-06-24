@@ -141,8 +141,12 @@ class BusTrips(models.Model):
 
 
 class DisturbanceStops(models.Model):
-    opd_date = models.DateField(blank=True, null=True)
-    day_of_week = models.FloatField(blank=True, null=True)
+    opd_date = models.DateField(primary_key=True)
+    service_key = models.TextField(blank=True, null=True)
+    year = models.IntegerField(blank=True, null=True)
+    month = models.IntegerField(blank=True, null=True)
+    day = models.IntegerField(blank=True, null=True)
+    day_of_week = models.IntegerField(blank=True, null=True)
     act_arr_time = models.DateTimeField(blank=True, null=True)
     act_dep_time = models.DateTimeField(blank=True, null=True)
     start_quarter_hour = models.FloatField(blank=True, null=True)
@@ -153,11 +157,12 @@ class DisturbanceStops(models.Model):
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     geom_point_4326 = models.PointField(blank=True, null=True)
-    id = models.BigIntegerField(primary_key=True)
+    id = models.BigIntegerField()
 
     class Meta:
         managed = False
-        db_table = "disturbance_stops"
+        db_table = 'disturbance_stops'
+        unique_together = (('opd_date', 'id'),)
 
 
 class DjangoAdminLog(models.Model):
