@@ -43,42 +43,49 @@ class DisturbanceStopsFilter(DjangoFilterBackend):
                 required=False,
                 location="query",
                 type="string",
-                description="Months to filter on. Example: 9,10,11 to include September, October and November.",
+                description="Months to filter on (integer). Only September (9), October (10) and November (11) are available. Example: '9,10' to include September and October.",
             ),
             coreapi.Field(
                 name="time_range",
                 required=False,
                 location="query",
                 type="string",
-                description="Quarter hour time range to filter on. 6.25,9.5 = 6:15 - 9:30",
+                description="Quarter hour time range to filter on. Example: '6.25,9.5' would filter from 6:15 am to 9:30 am",
             ),
             coreapi.Field(
                 name="years",
                 required=False,
                 location="query",
                 type="string",
-                description="Years to filter on. Example: 2017",
+                description="Years to filter on. Only 2017 and 2018 are available. Example: '2017' or '2017,2018'.",
             ),
             coreapi.Field(
                 name="directions",
                 required=False,
                 location="query",
                 type="string",
-                description="Line direction. 'I' for Inbound, 'O' for Outbound.",
+                description="Line direction. 'I' for Inbound, 'O' for Outbound. Example: 'I,O'."
             ),
             coreapi.Field(
                 name="lines",
                 required=False,
                 location="query",
                 type="string",
-                description="Bus routes to include.",
+                description="Bus routes to include. Example: '10,14' for routes 10 and 14.",
+            ),
+            coreapi.Field(
+                name="service_key",
+                required=False,
+                location="query",
+                type="string",
+                description="Service Key ('W' - Weekday, 'S' - Saturday, 'U' - Sunday, 'X' - Holiday).",
             ),
             coreapi.Field(
                 name="num",
                 required=False,
                 location="query",
                 type="integer",
-                description="Number of results to return so that the API doesn't hang.",
+                description="Development only. Number of results to return so that the API doesn't hang.",
             ),
         ]
         return fields
@@ -97,16 +104,15 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         Filters against query parameters in the URL.
         """
 
-        print(self.request.query_params)
         filters = {}
         # really could use the assignment operator here :)
         months = self.request.query_params.get("months", False)
         if months:
-            filters["opd_date__month__in"] = [int(m) for m in months.split(",")]
+            filters["month__in"] = [int(m) for m in months.split(",")]
 
         years = self.request.query_params.get("years", False)
         if years:
-            filters["opd_date__year__in"] = [int(y) for y in years.split(",")]
+            filters["year__in"] = [int(y) for y in years.split(",")]
 
         lines = self.request.query_params.get("lines", False)
         if lines:
@@ -116,6 +122,10 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         if directions:
             filters["pattern_direction__in"] = [d for d in directions.split(",")]
 
+        service_key = self.request.query_params.get("service_key", False)
+        if service_key:
+            filters["service_key__in"] = [sk for sk in service_key.split(",")]
+
         time_range = self.request.query_params.get("time_range", False)
         if time_range:
             times = [float(time) for time in time_range.split(",")]
@@ -123,7 +133,6 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
             filters["start_quarter_hour__range"] = r
             filters["end_quarter_hour__range"] = r
 
-        print(filters)
         num = self.request.query_params.get("num", False)
         if num:
             queryset = DisturbanceStops.objects.filter(**filters)[: int(num)]
