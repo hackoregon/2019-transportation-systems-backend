@@ -105,3 +105,4 @@ venv.bak/
 
 .env
 .DS_Store
+.devcontainer.json
