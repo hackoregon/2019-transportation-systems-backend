@@ -49,7 +49,30 @@ This repo uses pytest and pytest-django to run tests.
 For project development work, tests will be run in docker container
 using the bin/test.sh script:
 
-# Local development workflow
+# RDS database development workflow
+1. Clone this repository.
+2. Open a command terminal. Copy the file `env.sample` to `.env`.
+Update the `.env` file with the proper RDS credentials.
+3. Make sure your Docker host is working.
+4. Open a command prompt and type `bin/build.sh -d`. This will build
+the images. Open an issue if it doesn't work. NOTE: This command (and the one below) runs `sudo` in the background, so you will likely be asked for your log-in password to provide permission to begin. Don't confuse this with the passwords defined in the `.env` file.
+5. Type `bin/start.sh -d`. The containers will start up.
+6. When the database comes up, the API container will run a bunch of
+stuff and then start a server. You should see the Django success page
+at http://localhost:8000. (You may need to navigate to http://localhost:8000/v1/transportation-systems/schema/).
+7. There's a pgAdmin4 container listening on http://localhost:8686.
+If you want to use it, browse there. First log in to pgAdmin4 with
+the email address and password you set in `.env`. Then right-click
+on `Servers`. You'll see `local_postgis`; that's the local database
+container. When you click on that, it will ask you for a password.
+That's `POSTGRES_PASSWORD` from the `.env` file - copy and paste.
+8. The `local_postgis` container is listening on `localhost:5439`.
+Both `postgres` and `transportation2019` are database superusers
+with the password you set in `POSTGRES_PASSWORD`. So you can connect
+to the database with a Jupyter notebook or RStudio notebook and do
+data science.
+
+# Local database development workflow
 1. Clone this repository.
 2. Open a command terminal. Copy the file `env.sample` to `.env`.
 Change the passwords if you want to - that's really not necessary
