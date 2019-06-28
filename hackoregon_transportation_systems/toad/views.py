@@ -64,7 +64,7 @@ class DisturbanceStopsFilter(DjangoFilterBackend):
                 required=False,
                 location="query",
                 type="string",
-                description="Line direction. 'I' for Inbound, 'O' for Outbound. Example: 'I,O'."
+                description="Line direction. 'I' for Inbound, 'O' for Outbound. Example: 'I,O'.",
             ),
             coreapi.Field(
                 name="lines",
@@ -79,6 +79,13 @@ class DisturbanceStopsFilter(DjangoFilterBackend):
                 location="query",
                 type="string",
                 description="Service Key ('W' - Weekday, 'S' - Saturday, 'U' - Sunday, 'X' - Holiday).",
+            ),
+            coreapi.Field(
+                name="bounds",
+                required=False,
+                location="query",
+                type="string",
+                description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
             ),
             coreapi.Field(
                 name="num",
@@ -132,6 +139,12 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
             r = [times[0], times[1]]
             filters["start_quarter_hour__range"] = r
             filters["end_quarter_hour__range"] = r
+
+        bounds = self.request.query_params.get("bounds", False)
+        if bounds:
+            min_lon, min_lat, max_lon, max_lat = [float(b) for b in bounds.split(",")]
+            filters["latitude__range"] = [min_lat, max_lat]
+            filters["longitude__range"] = [min_lon, max_lon]
 
         num = self.request.query_params.get("num", False)
         if num:
