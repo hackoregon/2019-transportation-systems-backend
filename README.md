@@ -80,7 +80,7 @@ restore takes quite a bit of time; you'll see the API container polling
 it every minute.
 7. When the database comes up, the API container will run a bunch of
 stuff and then start a server. You should see the Django success page
-at http://localhost:8000.
+at http://localhost:8000/v1/transportation-systems/toad.
 8. There's a pgAdmin4 container listening on http://localhost:8686.
 If you want to use it, browse there. First log in to pgAdmin4 with
 the email address and password you set in `.env`. Then right-click
