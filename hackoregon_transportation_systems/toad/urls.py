@@ -8,6 +8,11 @@ router.register(
     r"busPassengerStops", views.BusPassengerStopsViewSet, basename="bus-passenger-stops"
 )
 router.register(
+    r"railPassengerStops",
+    views.RailPassengerStopsViewSet,
+    basename="rail-passenger-stops",
+)
+router.register(
     r"disturbanceStops", views.DisturbanceStopsViewSet, basename="disturbance-stops"
 )
 router.register(
