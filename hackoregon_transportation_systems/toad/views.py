@@ -1,10 +1,17 @@
 import coreapi
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
-from toad.models import BusAllStops, BusPassengerStops, DisturbanceStops, TrafficSignals
+from toad.models import (
+    BusAllStops,
+    BusPassengerStops,
+    RailPassengerStops,
+    DisturbanceStops,
+    TrafficSignals,
+)
 from toad.serializers import (
     BusAllStopsSerializer,
     BusPassengerStopsSerializer,
+    RailPassengerStopsSerializer,
     DisturbanceStopsSerializer,
     TrafficSignalsSerializer,
 )
@@ -19,18 +26,193 @@ class BusAllStopsViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BusAllStopsSerializer
 
 
-class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
+class BusPassengerStopsFilter(DjangoFilterBackend):
     """
-    This viewset will provide a list of scheduled stops along a Trimet line.
+    This filter is used to inject custom filter fields into the schema.
     """
 
-    queryset = BusPassengerStops.objects.all()
+    class Meta:
+        model = BusPassengerStops
+
+    def get_schema_fields(self, view):
+        fields = [
+            coreapi.Field(
+                name="lines",
+                required=False,
+                location="query",
+                type="string",
+                description="Bus routes to include. Example: '10,14' for routes 10 and 14.",
+            ),
+            coreapi.Field(
+                name="stops",
+                required=False,
+                location="query",
+                type="string",
+                description="Stop ids to include. Example:",
+            ),
+            coreapi.Field(
+                name="time_range",
+                required=False,
+                location="query",
+                type="string",
+                description="Quarter hour time range to filter on. Example: '6.25,9.5' would filter from 6:15 am to 9:30 am",
+            ),
+            coreapi.Field(
+                name="service_key",
+                required=False,
+                location="query",
+                type="string",
+                description="Service Key ('W' - Weekday, 'S' - Saturday, 'U' - Sunday, 'X' - Holiday).",
+            ),
+            coreapi.Field(
+                name="directions",
+                required=False,
+                location="query",
+                type="string",
+                description="Line direction. '1' for Inbound (or often Southboound), '0' for Outbound (or often Northbound). Example: '1,0'.",
+            ),
+        ]
+
+        return fields
+
+
+class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset will query scheduled stops along a Trimet bus line.
+    """
+
     serializer_class = BusPassengerStopsSerializer
+    filter_backends = (BusPassengerStopsFilter,)
+
+    def get_queryset(self):
+        """
+        Filters against query parameters in the URL.
+        """
+
+        filters = {}
+        # really could use the assignment operator here :)
+        lines = self.request.query_params.get("lines", False)
+        if lines:
+            filters["route_number__in"] = [int(l) for l in lines.split(",")]
+
+        stops = self.request.query_params.get("stops", False)
+        if stops:
+            filters["location_id__in"] = [int(s) for s in stops.split(",")]
+
+        directions = self.request.query_params.get("directions", False)
+        if directions:
+            filters["direction__in"] = [int(d) for d in directions.split(",")]
+
+        service_key = self.request.query_params.get("service_key", False)
+        if service_key:
+            filters["service_key__in"] = [sk for sk in service_key.split(",")]
+
+        time_range = self.request.query_params.get("time_range", False)
+        if time_range:
+            times = [float(time) for time in time_range.split(",")]
+            r = [times[0], times[1]]
+            filters["arrive_quarter_hour__range"] = r
+
+        queryset = BusPassengerStops.objects.filter(**filters)
+
+        return queryset
+
+
+class RailPassengerStopsFilter(DjangoFilterBackend):
+    """
+    This filter is used to inject custom filter fields into the schema.
+    """
+
+    class Meta:
+        model = RailPassengerStops
+
+    def get_schema_fields(self, view):
+        fields = [
+            coreapi.Field(
+                name="lines",
+                required=False,
+                location="query",
+                type="string",
+                description="Rail routes to include. `90` - RED, `100` - BLUE, `190` - YELLOW, `200` - GREEN, `290` - ORANGE. Example: '90,100' for the RED and BLUE lines.",
+            ),
+            coreapi.Field(
+                name="stops",
+                required=False,
+                location="query",
+                type="string",
+                description="Stop ids to include. Example:",
+            ),
+            coreapi.Field(
+                name="time_range",
+                required=False,
+                location="query",
+                type="string",
+                description="Quarter hour time range to filter on. Example: '6.25,9.5' would filter from 6:15 am to 9:30 am",
+            ),
+            coreapi.Field(
+                name="service_key",
+                required=False,
+                location="query",
+                type="string",
+                description="Service Key ('A' - Weekday MAX, 'B' - Saturday MAX, 'C' - Sunday MAX).",
+            ),
+            coreapi.Field(
+                name="directions",
+                required=False,
+                location="query",
+                type="string",
+                description="Line direction. '1' for Inbound (or often Southboound), '0' for Outbound (or often Northbound). Example: '1,0'.",
+            ),
+        ]
+
+        return fields
+
+
+class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset will provide a list of scheduled stops along a Trimet rail line.
+    """
+
+    serializer_class = RailPassengerStopsSerializer
+    filter_backends = (RailPassengerStopsFilter,)
+
+    def get_queryset(self):
+        """
+        Filters against query parameters in the URL.
+        """
+
+        filters = {}
+        # really could use the assignment operator here :)
+        lines = self.request.query_params.get("lines", False)
+        if lines:
+            filters["route_number__in"] = [int(l) for l in lines.split(",")]
+
+        stops = self.request.query_params.get("stops", False)
+        if stops:
+            filters["location_id__in"] = [int(s) for s in stops.split(",")]
+
+        directions = self.request.query_params.get("directions", False)
+        if directions:
+            filters["direction__in"] = [int(d) for d in directions.split(",")]
+
+        service_key = self.request.query_params.get("service_key", False)
+        if service_key:
+            filters["service_key__in"] = [sk for sk in service_key.split(",")]
+
+        time_range = self.request.query_params.get("time_range", False)
+        if time_range:
+            times = [float(time) for time in time_range.split(",")]
+            r = [times[0], times[1]]
+            filters["arrive_quarter_hour__range"] = r
+
+        queryset = RailPassengerStops.objects.filter(**filters)
+
+        return queryset
 
 
 class DisturbanceStopsFilter(DjangoFilterBackend):
     """
-    This filter is used to inject custom filter fields into schema.
+    This filter is used to inject custom filter fields into the schema.
     """
 
     class Meta:
