@@ -22,8 +22,17 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_gis",
     "rest_framework_swagger",
+    'health_check',                             # required
+    'health_check.db',                          # stock Django health checkers
+    'health_check.storage',
+    'health_check.contrib.psutil',              # disk and memory utilization; requires psutil
     "toad",
 ]
+
+HEALTH_CHECK = {
+    'DISK_USAGE_MAX': 90,  # percent
+    'MEMORY_MIN': 100,    # in MB
+}
 
 DATABASE_ROUTERS = ["backend.router.ModelDatabaseRouter"]
 
@@ -47,4 +56,5 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 100,
     "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.NamespaceVersioning",
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }

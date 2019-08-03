@@ -1,20 +1,31 @@
 FROM hackoregoncivic/backend-docker-django
-MAINTAINER Brian H. Grant <brian@hackoregon.org> & "M. Edward (Ed) Borasky <ed.borasky@hackoregon.org>
+MAINTAINER Brian H. Grant <brian@hackoregon.org> & M. Edward (Ed) Borasky <ed.borasky@hackoregon.org>
 ENV PYTHONUNBUFFERED 1
 ARG DEBUG=false
 
 WORKDIR /code
 
+# Put all requirements files in the workdir
 COPY /requirements/* /code/
+
+# Copy the django apps to be installed locally via pip
 COPY hackoregon_transportation_systems /code/hackoregon_transportation_systems
 
+RUN ls
 RUN if [ "$DEBUG" = true  ] ; then pip install -r development.txt ; else pip install -r production.txt ; fi
 
 RUN python
 
+# src_files is home to all the django files that "wrap" the django apps installed by pip
 RUN mkdir src_files
 
+# Copy all scripts and make sure they are executable
 COPY bin /code/src_files/bin/
-RUN chmod +x *.py /code/src_files/bin/*.sh /code/bin/*.sh
+RUN chmod +x *.py
+
+# Copy settings and staticfiles to make sure they are baked into the container
+# rather than always expecting them to be mounted at runtime.
+COPY local_settings /code/src_files/local_settings
+# COPY staticfiles /code/src_files/staticfiles
 
 ENTRYPOINT [ "/code/src_files/bin/docker-entrypoint.sh" ]

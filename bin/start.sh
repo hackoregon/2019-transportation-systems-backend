@@ -1,21 +1,35 @@
 #! /bin/bash
-usage() { echo "Usage: $0 [-d] for a development build, [-p] for a production build, [-l] for a local PostGIS build" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-d] for a development build, [-p] for a production build, [-b] for bash shell" 1>&2; exit 1; }
 
 if [ $# == 0 ]; then usage; fi
 
-while getopts ":dpl" opt; do
+while getopts ":dpb" opt; do
     case "$opt" in
         d)
           DEBUG=true
-          sudo docker-compose up
+          if [ `uname -s` = "Linux" ]
+          then
+            sudo docker-compose up
+          else
+            docker-compose up
+          fi
           ;;
         p)
-          DEBUG=false
-          sudo docker-compose up
+          # DEBUG=false
+          if [ `uname -s` = "Linux" ]
+          then
+            sudo docker-compose up
+          else
+            docker-compose up
+          fi
           ;;
-        l)
-          DEBUG=true
-          sudo docker-compose -f local-postgis.yml up
+        b)
+          if [ `uname -s` = "Linux" ]
+          then
+            sudo docker-compose run --entrypoint bash api
+          else
+            docker-compose run --entrypoint bash api
+          fi
           ;;
         *)
           usage
