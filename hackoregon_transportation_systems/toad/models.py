@@ -101,6 +101,7 @@ class BusAllStops(models.Model):
 class BusPassengerStops(models.Model):
     vehicle_id = models.IntegerField(blank=True, null=True)
     service_date = models.DateField(blank=True, null=True)
+    service_key = models.TextField(blank=True, null=True)
     arrive_time = models.DateTimeField(blank=True, null=True)
     leave_time = models.DateTimeField(blank=True, null=True)
     stop_time = models.DateTimeField(blank=True, null=True)
@@ -116,10 +117,14 @@ class BusPassengerStops(models.Model):
     train_mileage = models.FloatField(blank=True, null=True)
     geom_point_4326 = models.PointField(blank=True, null=True)
     id = models.BigIntegerField(primary_key=True)
+    seconds_late = models.IntegerField(blank=True, null=True)
+    arriving_load = models.IntegerField(blank=True, null=True)
+    arrive_quarter_hour = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = "bus_passenger_stops"
+        unique_together = (("service_date", "id"),)
 
 
 class BusTrips(models.Model):
@@ -141,7 +146,7 @@ class BusTrips(models.Model):
 
 
 class DisturbanceStops(models.Model):
-    opd_date = models.DateField(primary_key=True)
+    opd_date = models.DateField(blank=True, null=True)
     service_key = models.TextField(blank=True, null=True)
     year = models.IntegerField(blank=True, null=True)
     month = models.IntegerField(blank=True, null=True)
@@ -157,12 +162,12 @@ class DisturbanceStops(models.Model):
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     geom_point_4326 = models.PointField(blank=True, null=True)
-    id = models.BigIntegerField()
+    id = models.BigIntegerField(primary_key=True)
 
     class Meta:
         managed = False
-        db_table = 'disturbance_stops'
-        unique_together = (('opd_date', 'id'),)
+        db_table = "disturbance_stops"
+        unique_together = (("opd_date", "id"),)
 
 
 class DjangoAdminLog(models.Model):
@@ -214,6 +219,7 @@ class DjangoSession(models.Model):
 class RailPassengerStops(models.Model):
     vehicle_id = models.IntegerField(blank=True, null=True)
     service_date = models.DateField(blank=True, null=True)
+    service_key = models.TextField(blank=True, null=True)
     arrive_time = models.DateTimeField(blank=True, null=True)
     leave_time = models.DateTimeField(blank=True, null=True)
     stop_time = models.DateTimeField(blank=True, null=True)
@@ -229,10 +235,14 @@ class RailPassengerStops(models.Model):
     train_mileage = models.FloatField(blank=True, null=True)
     geom_point_4326 = models.PointField(blank=True, null=True)
     id = models.BigIntegerField(primary_key=True)
+    seconds_late = models.IntegerField(blank=True, null=True)
+    arriving_load = models.IntegerField(blank=True, null=True)
+    arrive_quarter_hour = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = "rail_passenger_stops"
+        unique_together = (("service_date", "id"),)
 
 
 class TrafficSignals(models.Model):

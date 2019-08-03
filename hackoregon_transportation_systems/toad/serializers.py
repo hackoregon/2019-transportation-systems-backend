@@ -1,6 +1,12 @@
 # from rest_framework import serializers
 from rest_framework_gis import serializers
-from toad.models import DisturbanceStops, TrafficSignals, BusAllStops, BusPassengerStops
+from toad.models import (
+    DisturbanceStops,
+    TrafficSignals,
+    BusAllStops,
+    BusPassengerStops,
+    RailPassengerStops,
+)
 
 
 class BusAllStopsSerializer(serializers.GeoFeatureModelSerializer):
@@ -14,6 +20,14 @@ class BusAllStopsSerializer(serializers.GeoFeatureModelSerializer):
 class BusPassengerStopsSerializer(serializers.GeoFeatureModelSerializer):
     class Meta:
         model = BusPassengerStops
+        fields = "__all__"
+        geo_field = "geom_point_4326"
+        id = "id"
+
+
+class RailPassengerStopsSerializer(serializers.GeoFeatureModelSerializer):
+    class Meta:
+        model = RailPassengerStops
         fields = "__all__"
         geo_field = "geom_point_4326"
         id = "id"
