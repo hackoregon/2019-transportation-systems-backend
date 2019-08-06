@@ -12,6 +12,7 @@ set -e
 
 
 if [ -z ${DEBUG+x} ]; then echo "DEBUG var is unset, setting to False" && export DEBUG=false ; else echo "var is set to '$DEBUG'"; fi
+if [ -z ${TRAVIS+x} ]; then echo "TRAVIS var is unset, setting to False" && export TRAVIS=false ; else echo "var is set to '$TRAVIS'"; fi
 
 echo DEBUG: "${DEBUG}"
 echo DEBUG,,: "${DEBUG,,}"
