@@ -17,9 +17,9 @@ echo Debug: "${DEBUG,,}"
 
 if [ ! "${DEBUG,,}" ] && [ ! "${TRAVIS}" ]; then
   source /code/bin/get-ssm-parameters.sh
-  POSTGRES_NAME: $POSTGRES_NAME
-  POSTGRES_HOST: $POSTGRES_HOST
-  POSTGRES_PORT: $POSTGRES_PORT
+  echo POSTGRES_NAME: $POSTGRES_NAME
+  echo POSTGRES_HOST: $POSTGRES_HOST
+  echo POSTGRES_PORT: $POSTGRES_PORT
 fi
 
 if [ "$POSTGRES_NAME" ]; then
