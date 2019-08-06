@@ -55,6 +55,6 @@ urlpatterns = [
     url(r"^transportation2019/schema/v1", schema_view),
     url(
         r"^transportation2019/toad/v1",
-        include("hackoregon_transportation_systems.toad.urls", "toad"),
+        include("hackoregon_transportation_systems.toad.urls"),
     ),
 ]
