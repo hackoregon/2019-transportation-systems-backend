@@ -52,11 +52,8 @@ schema_view = get_swagger_view(title="Hack Oregon Transportation Systems 2019 AP
 
 
 urlpatterns = [
-    url(r"^transportation2019/schema/", schema_view),
+    url(r"^transportation2019/schema/v1", schema_view),
     url(
-        r"^transportation2019/toad/",
-        include(
-            ("hackoregon_transportation_systems.toad.urls", "toad"), namespace="v1"
-        ),
+        r"^transportation2019/toad/v1", include("hackoregon_transportation_systems.toad.urls", "toad")),
     ),
 ]
