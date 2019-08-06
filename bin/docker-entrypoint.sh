@@ -13,13 +13,14 @@ set -e
 
 if [ -z ${DEBUG+x} ]; then echo "DEBUG var is unset, setting to False" && export DEBUG=false ; else echo "var is set to '$DEBUG'"; fi
 
-echo Debug: "${DEBUG,,}"
+echo DEBUG: "${DEBUG}"
+echo TRAVIS: "${TRAVIS}"
 
-if [ ! "${DEBUG,,}" ] && [ ! "${TRAVIS}" ]; then
+if [ ! "${DEBUG}" ] && [ ! "${TRAVIS}" ]; then
   source /code/bin/get-ssm-parameters.sh
-  echo POSTGRES_NAME: $POSTGRES_NAME
-  echo POSTGRES_HOST: $POSTGRES_HOST
-  echo POSTGRES_PORT: $POSTGRES_PORT
+  echo POSTGRES_NAME: "${POSTGRES_NAME}"
+  echo POSTGRES_HOST: "${POSTGRES_HOST}"
+  echo POSTGRES_PORT: "${POSTGRES_PORT}"
 fi
 
 if [ "$POSTGRES_NAME" ]; then
