@@ -49,7 +49,7 @@ DATABASES = {
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-STATIC_URL = "/hackoregon_transportation_systems/static/"
+STATIC_URL = "/transportation2019/static/"
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
