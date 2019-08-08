@@ -26,17 +26,6 @@ echo TRAVIS,,: "${TRAVIS,,}"
   echo POSTGRES_PORT: "${POSTGRES_PORT}"
 #fi
 
-#if [ "$POSTGRES_NAME" ]; then
-  #export PGPASSWORD=$POSTGRES_PASSWORD
-  #until psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -p "$POSTGRES_PORT" -d postgres -c '\q'
-  #do
-    #>&2 echo "Postgres is unavailable - sleeping"
-    #sleep 5
-  #done
-#fi
-
->&2 echo "Postgres is up"
-
 chmod +x *.py
 
 echo "Make migrations"
