@@ -250,7 +250,7 @@ class TmRailStops(models.Model):
     station = models.TextField(blank=True, null=True)
     stop_type = models.TextField(blank=True, null=True)  # renamed b/c of reserved word
     line = models.TextField(blank=True, null=True)
-    status = models.Textfield(blank=True, null=True)
+    status = models.TextField(blank=True, null=True)
     wkb_geometry = models.PointField(blank=True, null=True)
 
     class Meta:
@@ -266,7 +266,7 @@ class TmRouteStops(models.Model):
     )  # renamed b/c of reserved word
     rte_desc = models.TextField(blank=True, null=True)
     dir_desc = models.TextField(blank=True, null=True)
-    stop_type = models.Textfield(blank=True, null=True)
+    stop_type = models.TextField(blank=True, null=True)
     stop_seq = models.IntegerField(blank=True, null=True)
     stop_id = models.IntegerField(blank=True, null=True)
     stop_name = models.TextField(blank=True, null=True)
