@@ -18,5 +18,7 @@ router.register(
 router.register(
     r"trafficSignals", views.TrafficSignalsViewSet, basename="traffic-signals"
 )
+router.register(r"tmRailStops", views.TmRailStopsViewSet, basename="tm-rail-stops")
+router.register(r"tmRouteStops", views.TmRouteStopsViewSet, basename="tm-route-stops")
 
 urlpatterns = [url(r"^", include(router.urls))]

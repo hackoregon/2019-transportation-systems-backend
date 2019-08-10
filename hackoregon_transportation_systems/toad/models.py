@@ -245,6 +245,41 @@ class RailPassengerStops(models.Model):
         unique_together = (("service_date", "id"),)
 
 
+class TmRailStops(models.Model):
+    ogc_fid = models.IntegerField(primary_key=True)
+    station = models.TextField(blank=True, null=True)
+    stop_type = models.TextField(blank=True, null=True)  # renamed b/c of reserved word
+    line = models.TextField(blank=True, null=True)
+    status = models.TextField(blank=True, null=True)
+    wkb_geometry = models.PointField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = "tm_rail_stops"
+
+
+class TmRouteStops(models.Model):
+    ogc_fid = models.IntegerField(primary_key=True)
+    rte = models.IntegerField(blank=True, null=True)
+    direction = models.IntegerField(
+        blank=True, null=True
+    )  # renamed b/c of reserved word
+    rte_desc = models.TextField(blank=True, null=True)
+    dir_desc = models.TextField(blank=True, null=True)
+    stop_type = models.TextField(blank=True, null=True)
+    stop_seq = models.IntegerField(blank=True, null=True)
+    stop_id = models.IntegerField(blank=True, null=True)
+    stop_name = models.TextField(blank=True, null=True)
+    jurisdic = models.TextField(blank=True, null=True)
+    zipcode = models.TextField(blank=True, null=True)
+    frequent = models.TextField(blank=True, null=True)
+    wkb_geometry = models.PointField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = "tm_route_stops"
+
+
 class TrafficSignals(models.Model):
     ogc_fid = models.AutoField(primary_key=True)
     objectid = models.DecimalField(

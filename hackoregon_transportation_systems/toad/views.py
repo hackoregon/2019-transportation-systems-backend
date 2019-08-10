@@ -7,6 +7,8 @@ from toad.models import (
     RailPassengerStops,
     DisturbanceStops,
     TrafficSignals,
+    TmRailStops,
+    TmRouteStops,
 )
 from toad.serializers import (
     BusAllStopsSerializer,
@@ -14,6 +16,8 @@ from toad.serializers import (
     RailPassengerStopsSerializer,
     DisturbanceStopsSerializer,
     TrafficSignalsSerializer,
+    TmRailStopsSerializer,
+    TmRouteStopsSerializer,
 )
 
 
@@ -344,3 +348,21 @@ class TrafficSignalsViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = TrafficSignals.objects.all()
     serializer_class = TrafficSignalsSerializer
+
+
+class TmRouteStopsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    <>
+    """
+
+    queryset = TmRouteStops.objects.all()
+    serializer_class = TmRouteStopsSerializer
+
+
+class TmRailStopsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    <>
+    """
+
+    queryset = TmRailStops.objects.all()
+    serializer_class = TmRailStopsSerializer

@@ -6,6 +6,8 @@ from toad.models import (
     BusAllStops,
     BusPassengerStops,
     RailPassengerStops,
+    TmRouteStops,
+    TmRailStops,
 )
 
 
@@ -45,5 +47,21 @@ class TrafficSignalsSerializer(serializers.GeoFeatureModelSerializer):
     class Meta:
         model = TrafficSignals
         fields = ("wkb_geometry", "ogc_fid")
+        geo_field = "wkb_geometry"
+        id = "ogc_fid"
+
+
+class TmRouteStopsSerializer(serializers.GeoFeatureModelSerializer):
+    class Meta:
+        model = TmRouteStops
+        fields = "__all__"
+        geo_field = "wkb_geometry"
+        id = "ogc_fid"
+
+
+class TmRailStopsSerializer(serializers.GeoFeatureModelSerializer):
+    class Meta:
+        model = TmRailStops
+        fields = "__all__"
         geo_field = "wkb_geometry"
         id = "ogc_fid"
