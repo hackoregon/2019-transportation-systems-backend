@@ -45,35 +45,37 @@ class BusPassengerStopsFilter(DjangoFilterBackend):
                 required=False,
                 location="query",
                 type="string",
-                description="Bus routes to include. Example: '10,14' for routes 10 and 14.",
+                description="Bus routes to include, separated by a comma.\n\nExample:\n\n10,14\n\nReturns data for only routes 10 and 14.",
             ),
             coreapi.Field(
                 name="stops",
                 required=False,
                 location="query",
                 type="string",
-                description="Stop ids to include. Example:",
+                description="Stop ids to include, separated by a comma.\n\nExample:\n\nstopid1,stopid2,stopid3\n\nReturns data for only these stops.",
             ),
             coreapi.Field(
                 name="time_range",
                 required=False,
                 location="query",
                 type="string",
-                description="Quarter hour time range to filter on. Example: '6.25,9.5' would filter from 6:15 am to 9:30 am",
+                description=(
+                    "Decimal time range to filter on (24 hour). Formatted as 'START,STOP', where START and STOP are numbers. Both START and STOP are required. The decimal format is converted to correct time format.\n\nExample:\n\n6.25,9.5\n\nReturns data filtered from 6:15 am to 9:30 am."
+                ),
             ),
             coreapi.Field(
                 name="service_key",
                 required=False,
                 location="query",
                 type="string",
-                description="Service Key ('W' - Weekday, 'S' - Saturday, 'U' - Sunday, 'X' - Holiday).",
+                description="Service Key\n\nW - Weekdays\nS - Saturday\nU - Sunday\nX - Holiday",
             ),
             coreapi.Field(
                 name="directions",
                 required=False,
                 location="query",
                 type="string",
-                description="Line direction. '1' for Inbound (or often Southboound), '0' for Outbound (or often Northbound). Example: '1,0'.",
+                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\n\n1,0\n\nReturns data from both directions of a route.",
             ),
         ]
 
@@ -82,7 +84,7 @@ class BusPassengerStopsFilter(DjangoFilterBackend):
 
 class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    This viewset will query scheduled stops along a Trimet bus line.
+    This endpoint returns GeoJSON points from scheduled stop events along TriMet bus routes.
     """
 
     serializer_class = BusPassengerStopsSerializer
@@ -174,7 +176,7 @@ class RailPassengerStopsFilter(DjangoFilterBackend):
 
 class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    This viewset will provide a list of scheduled stops along a Trimet rail line.
+    This endpoint returns GeoJSON points from scheduled stop events along TriMet rail routes.
     """
 
     serializer_class = RailPassengerStopsSerializer
@@ -286,7 +288,8 @@ class DisturbanceStopsFilter(DjangoFilterBackend):
 
 class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    This viewset will provide a list of all disturbance stops of busses.
+    This endpoint returns GeoJSON points from disturbance stop events along TriMet bus routes.\n
+    Disturbance stops are when a bus stops for longer than 5 seconds outside of a scheduled stop catchment area.
     """
 
     serializer_class = DisturbanceStopsSerializer
@@ -343,7 +346,7 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
 
 class TrafficSignalsViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    This viewset will provide a list of all the traffic signals in the Portland area.
+    This endpoint returns GeoJSON points of traffic signal locations in the Portland area.
     """
 
     queryset = TrafficSignals.objects.all()
@@ -352,7 +355,8 @@ class TrafficSignalsViewSet(viewsets.ReadOnlyModelViewSet):
 
 class TmRouteStopsViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    <>
+    This endpoint returns GeoJSON points of TriMet bus stop locations in the Trimet service area.
+    These locations are current as of early August 2019.
     """
 
     queryset = TmRouteStops.objects.all()
@@ -361,7 +365,8 @@ class TmRouteStopsViewSet(viewsets.ReadOnlyModelViewSet):
 
 class TmRailStopsViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    <>
+    This endpoint returns GeoJSON points of TriMet rail stop locations in the Trimet service area.
+    These locations are current as of early August 2019.
     """
 
     queryset = TmRailStops.objects.all()
