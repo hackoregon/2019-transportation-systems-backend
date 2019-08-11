@@ -21,13 +21,13 @@ from toad.serializers import (
 )
 
 
-class BusAllStopsViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    This viewset will provide a list of all times a bus stops (scheduled or not).
-    """
+# class BusAllStopsViewSet(viewsets.ReadOnlyModelViewSet):
+#     """
+#     This viewset will provide a list of all times a bus stops (scheduled or not).
+#     """
 
-    queryset = BusAllStops.objects.all()
-    serializer_class = BusAllStopsSerializer
+#     queryset = BusAllStops.objects.all()
+#     serializer_class = BusAllStopsSerializer
 
 
 class BusPassengerStopsFilter(DjangoFilterBackend):
