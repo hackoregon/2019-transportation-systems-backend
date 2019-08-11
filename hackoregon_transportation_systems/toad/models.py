@@ -246,11 +246,12 @@ class RailPassengerStops(models.Model):
 
 
 class TmRailStops(models.Model):
-    ogc_fid = models.IntegerField(primary_key=True)
-    station = models.TextField(blank=True, null=True)
-    stop_type = models.TextField(blank=True, null=True)  # renamed b/c of reserved word
-    line = models.TextField(blank=True, null=True)
-    status = models.TextField(blank=True, null=True)
+    # inspectdb returns maxlength of -1, setting to 255 for now
+    ogc_fid = models.AutoField(primary_key=True)
+    station = models.CharField(max_length=255, blank=True, null=True)
+    type = models.CharField(max_length=255, blank=True, null=True)
+    line = models.CharField(max_length=255, blank=True, null=True)
+    status = models.CharField(max_length=255, blank=True, null=True)
     wkb_geometry = models.PointField(blank=True, null=True)
 
     class Meta:
@@ -259,20 +260,19 @@ class TmRailStops(models.Model):
 
 
 class TmRouteStops(models.Model):
-    ogc_fid = models.IntegerField(primary_key=True)
+    # inspectdb returns maxlength of -1, setting to 255 for now
+    ogc_fid = models.AutoField(primary_key=True)
     rte = models.IntegerField(blank=True, null=True)
-    direction = models.IntegerField(
-        blank=True, null=True
-    )  # renamed b/c of reserved word
-    rte_desc = models.TextField(blank=True, null=True)
-    dir_desc = models.TextField(blank=True, null=True)
-    stop_type = models.TextField(blank=True, null=True)
+    dir = models.IntegerField(blank=True, null=True)
+    rte_desc = models.CharField(max_length=255, blank=True, null=True)
+    dir_desc = models.CharField(max_length=255, blank=True, null=True)
+    type = models.CharField(max_length=255, blank=True, null=True)
     stop_seq = models.IntegerField(blank=True, null=True)
     stop_id = models.IntegerField(blank=True, null=True)
-    stop_name = models.TextField(blank=True, null=True)
-    jurisdic = models.TextField(blank=True, null=True)
-    zipcode = models.TextField(blank=True, null=True)
-    frequent = models.TextField(blank=True, null=True)
+    stop_name = models.CharField(max_length=255, blank=True, null=True)
+    jurisdic = models.CharField(max_length=255, blank=True, null=True)
+    zipcode = models.CharField(max_length=255, blank=True, null=True)
+    frequent = models.CharField(max_length=255, blank=True, null=True)
     wkb_geometry = models.PointField(blank=True, null=True)
 
     class Meta:
