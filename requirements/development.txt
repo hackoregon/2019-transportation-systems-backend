@@ -5,3 +5,5 @@
 -e ./hackoregon_transportation_systems
 
 pytest
+django-health-check
+psutil
