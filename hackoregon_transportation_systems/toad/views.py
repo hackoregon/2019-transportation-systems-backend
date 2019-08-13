@@ -46,14 +46,14 @@ class BusPassengerStopsFilter(DjangoFilterBackend):
                 required=False,
                 location="query",
                 type="string",
-                description="Bus route numbers to include, separated by a comma.\n\nExample:\n\n10,14\n\nReturns data for only routes 10 and 14.",
+                description="Bus route numbers to include, separated by a comma.\n\nExample:\t10,14\n\nReturns data for only routes 10 and 14.",
             ),
             coreapi.Field(
                 name="stops",
                 required=False,
                 location="query",
                 type="string",
-                description="Stop ids to include, separated by a comma.\n\nExample:\n\nstopid1,stopid2,stopid3\n\nReturns data for only these stops.",
+                description="Stop ids to include, separated by a comma.\n\nExample:\tstopid1,stopid2,stopid3\n\nReturns data for only these stops.",
             ),
             coreapi.Field(
                 name="time_range",
@@ -61,7 +61,7 @@ class BusPassengerStopsFilter(DjangoFilterBackend):
                 location="query",
                 type="string",
                 description=(
-                    "Decimal time range to filter on (24 hour). Formatted as 'START,STOP', where START and STOP are numbers. Both START and STOP are required. The decimal format is converted to correct time format.\n\nExample:\n\n6.25,9.5\n\nReturns data filtered from 6:15 am to 9:30 am."
+                    "Decimal time range to filter on (24 hour). Formatted as 'START,STOP', where START and STOP are numbers. Both START and STOP are required. The decimal format is converted to correct time format.\n\nExample:\t6.25,9.5\n\nReturns data filtered from 6:15 am to 9:30 am."
                 ),
             ),
             coreapi.Field(
@@ -76,7 +76,7 @@ class BusPassengerStopsFilter(DjangoFilterBackend):
                 required=False,
                 location="query",
                 type="string",
-                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\n\n1,0\n\nReturns data from both directions of a route.",
+                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\t1,0\n\nReturns data from both directions of a route.",
             ),
         ]
 
