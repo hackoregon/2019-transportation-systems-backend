@@ -1,6 +1,7 @@
 import coreapi
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.exceptions import ValidationError
 from toad.models import (
     BusAllStops,
     BusPassengerStops,
@@ -45,7 +46,7 @@ class BusPassengerStopsFilter(DjangoFilterBackend):
                 required=False,
                 location="query",
                 type="string",
-                description="Bus routes to include, separated by a comma.\n\nExample:\n\n10,14\n\nReturns data for only routes 10 and 14.",
+                description="Bus route numbers to include, separated by a comma.\n\nExample:\n\n10,14\n\nReturns data for only routes 10 and 14.",
             ),
             coreapi.Field(
                 name="stops",
@@ -99,7 +100,14 @@ class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
         # really could use the assignment operator here :)
         lines = self.request.query_params.get("lines", False)
         if lines:
-            filters["route_number__in"] = [int(l) for l in lines.split(",")]
+            try:
+                filters["route_number__in"] = [int(l) for l in lines.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"route_number": f"'{lines}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"route_number": f"'{lines}' - unknown error."})
 
         stops = self.request.query_params.get("stops", False)
         if stops:
