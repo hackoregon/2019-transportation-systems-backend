@@ -111,21 +111,49 @@ class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
 
         stops = self.request.query_params.get("stops", False)
         if stops:
-            filters["location_id__in"] = [int(s) for s in stops.split(",")]
+            try:
+                filters["location_id__in"] = [int(s) for s in stops.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"stop_id": f"'{stops}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"stop_id": f"'{stops}' - unknown error."})
 
         directions = self.request.query_params.get("directions", False)
         if directions:
-            filters["direction__in"] = [int(d) for d in directions.split(",")]
+            try:
+                filters["direction__in"] = [int(d) for d in directions.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"direction": f"'{directions}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"direction": f"'{directions}' - unknown error."})                
 
         service_key = self.request.query_params.get("service_key", False)
         if service_key:
-            filters["service_key__in"] = [sk for sk in service_key.split(",")]
+            try:
+                filters["service_key__in"] = [sk for sk in service_key.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"service_key": f"'{service_key}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"service_key": f"'{service_key}' - unknown error."})   
 
         time_range = self.request.query_params.get("time_range", False)
         if time_range:
-            times = [float(time) for time in time_range.split(",")]
-            r = [times[0], times[1]]
-            filters["arrive_quarter_hour__range"] = r
+            try:
+                times = [float(time) for time in time_range.split(",")]
+                r = [times[0], times[1]]
+                filters["arrive_quarter_hour__range"] = r
+            except ValueError:
+                raise ValidationError(
+                    {"time_range": f"'{time_range}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"time_range": f"'{time_range}' - unknown error."})                   
 
         queryset = BusPassengerStops.objects.filter(**filters)
 
@@ -199,25 +227,60 @@ class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
         # really could use the assignment operator here :)
         lines = self.request.query_params.get("lines", False)
         if lines:
-            filters["route_number__in"] = [int(l) for l in lines.split(",")]
+            try:
+                filters["route_number__in"] = [int(l) for l in lines.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"route_number": f"'{lines}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"route_number": f"'{lines}' - unknown error."})
 
         stops = self.request.query_params.get("stops", False)
         if stops:
-            filters["location_id__in"] = [int(s) for s in stops.split(",")]
+            try:
+                filters["location_id__in"] = [int(s) for s in stops.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"stop_id": f"'{stops}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"stop_id": f"'{stops}' - unknown error."})
 
         directions = self.request.query_params.get("directions", False)
         if directions:
-            filters["direction__in"] = [int(d) for d in directions.split(",")]
+            try:
+                filters["direction__in"] = [int(d) for d in directions.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"direction": f"'{directions}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"direction": f"'{directions}' - unknown error."})                
 
         service_key = self.request.query_params.get("service_key", False)
         if service_key:
-            filters["service_key__in"] = [sk for sk in service_key.split(",")]
+            try:
+                filters["service_key__in"] = [sk for sk in service_key.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"service_key": f"'{service_key}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"service_key": f"'{service_key}' - unknown error."})   
 
         time_range = self.request.query_params.get("time_range", False)
         if time_range:
-            times = [float(time) for time in time_range.split(",")]
-            r = [times[0], times[1]]
-            filters["arrive_quarter_hour__range"] = r
+            try:
+                times = [float(time) for time in time_range.split(",")]
+                r = [times[0], times[1]]
+                filters["arrive_quarter_hour__range"] = r
+            except ValueError:
+                raise ValidationError(
+                    {"time_range": f"'{time_range}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"time_range": f"'{time_range}' - unknown error."})  
 
         queryset = RailPassengerStops.objects.filter(**filters)
 
@@ -307,41 +370,90 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         """
         Filters against query parameters in the URL.
         """
-
+  
         filters = {}
         # really could use the assignment operator here :)
         months = self.request.query_params.get("months", False)
         if months:
-            filters["month__in"] = [int(m) for m in months.split(",")]
+            try:
+                filters["month__in"] = [int(m) for m in months.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"month": f"'{months}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"month": f"'{months}' - unknown error."})                  
 
         years = self.request.query_params.get("years", False)
         if years:
-            filters["year__in"] = [int(y) for y in years.split(",")]
+            try:
+                filters["year__in"] = [int(y) for y in years.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"year": f"'{years}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"year": f"'{years}' - unknown error."})                 
 
         lines = self.request.query_params.get("lines", False)
         if lines:
-            filters["line_id__in"] = [int(l) for l in lines.split(",")]
+            try:
+                filters["line_id__in"] = [int(l) for l in lines.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"line_id": f"'{lines}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"line_id": f"'{lines}' - unknown error."})   
 
         directions = self.request.query_params.get("directions", False)
         if directions:
-            filters["pattern_direction__in"] = [d for d in directions.split(",")]
+            try:
+                filters["pattern_direction__in"] = [d for d in directions.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"direction": f"'{lines}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"direction": f"'{lines}' - unknown error."})  
 
         service_key = self.request.query_params.get("service_key", False)
         if service_key:
-            filters["service_key__in"] = [sk for sk in service_key.split(",")]
+            try:
+                filters["service_key__in"] = [sk for sk in service_key.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"service_key": f"'{service_key}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"service_key": f"'{service_key}' - unknown error."})                  
 
         time_range = self.request.query_params.get("time_range", False)
         if time_range:
-            times = [float(time) for time in time_range.split(",")]
-            r = [times[0], times[1]]
-            filters["start_quarter_hour__range"] = r
-            filters["end_quarter_hour__range"] = r
+            try:
+                times = [float(time) for time in time_range.split(",")]
+                r = [times[0], times[1]]
+                filters["start_quarter_hour__range"] = r
+                filters["end_quarter_hour__range"] = r
+            except ValueError:
+                raise ValidationError(
+                    {"time_range": f"'{time_range}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"time_range": f"'{time_range}' - unknown error."})                       
 
         bounds = self.request.query_params.get("bounds", False)
         if bounds:
-            min_lon, min_lat, max_lon, max_lat = [float(b) for b in bounds.split(",")]
-            filters["latitude__range"] = [min_lat, max_lat]
-            filters["longitude__range"] = [min_lon, max_lon]
+            try:
+                min_lon, min_lat, max_lon, max_lat = [float(b) for b in bounds.split(",")]
+                filters["latitude__range"] = [min_lat, max_lat]
+                filters["longitude__range"] = [min_lon, max_lon]
+            except ValueError:
+                raise ValidationError(
+                    {"bound": f"'{bounds}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"bound": f"'{bounds}' - unknown error."})                 
 
         num = self.request.query_params.get("num", False)
         if num:
