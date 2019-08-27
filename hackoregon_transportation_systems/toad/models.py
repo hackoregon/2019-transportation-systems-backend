@@ -74,32 +74,34 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (("user", "permission"),)
 
 
-class BusAllStops(models.Model):
-    vehicle_id = models.IntegerField(blank=True, null=True)
-    opd_date = models.DateField(blank=True, null=True)
-    act_arr_time = models.DateTimeField(blank=True, null=True)
-    act_dep_time = models.DateTimeField(blank=True, null=True)
-    nom_arr_time = models.DateTimeField(blank=True, null=True)
-    nom_dep_time = models.DateTimeField(blank=True, null=True)
-    event_no_trip = models.IntegerField(blank=True, null=True)
-    meters = models.IntegerField(blank=True, null=True)
-    stop_id = models.IntegerField(blank=True, null=True)
-    stop_pos = models.IntegerField(blank=True, null=True)
-    distance_to_next = models.IntegerField(blank=True, null=True)
-    distance_to_trip = models.IntegerField(blank=True, null=True)
-    doors_opening = models.IntegerField(blank=True, null=True)
-    stop_type = models.IntegerField(blank=True, null=True)
-    door_open_time = models.IntegerField(blank=True, null=True)
-    geom_point_4326 = models.PointField(blank=True, null=True)
+class BusByStopSummary(models.Model):
+    location_id = models.IntegerField(blank=True, null=True)
+    route_number = models.IntegerField(blank=True, null=True)
+    direction = models.IntegerField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    geom_point_4326 = models.GeometryField(srid=0, blank=True, null=True)
+    arrive_quarter_hour = models.FloatField(blank=True, null=True)
+    samples = models.BigIntegerField(blank=True, null=True)
+    p05_seconds_late = models.FloatField(blank=True, null=True)
+    q1_seconds_late = models.FloatField(blank=True, null=True)
+    median_seconds_late = models.FloatField(blank=True, null=True)
+    q3_seconds_late = models.FloatField(blank=True, null=True)
+    p95_seconds_late = models.FloatField(blank=True, null=True)
+    iqr_seconds_late = models.FloatField(blank=True, null=True)
+    monthly_total_ons = models.BigIntegerField(blank=True, null=True)
+    monthly_total_offs = models.BigIntegerField(blank=True, null=True)
     id = models.BigIntegerField(primary_key=True)
 
     class Meta:
         managed = False
-        db_table = "bus_all_stops"
+        db_table = 'bus_by_stop_summary'
 
 
 class BusPassengerStops(models.Model):
     vehicle_id = models.IntegerField(blank=True, null=True)
+    train = models.IntegerField(blank=True, null=True)
+    trip_number = models.IntegerField(blank=True, null=True)
     service_date = models.DateField(blank=True, null=True)
     service_key = models.TextField(blank=True, null=True)
     arrive_time = models.DateTimeField(blank=True, null=True)
@@ -116,15 +118,105 @@ class BusPassengerStops(models.Model):
     estimated_load = models.IntegerField(blank=True, null=True)
     train_mileage = models.FloatField(blank=True, null=True)
     geom_point_4326 = models.PointField(blank=True, null=True)
-    id = models.BigIntegerField(primary_key=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    year = models.IntegerField(blank=True, null=True)
+    month = models.IntegerField(blank=True, null=True)
+    day = models.IntegerField(blank=True, null=True)
+    day_of_week = models.IntegerField(blank=True, null=True)
     seconds_late = models.IntegerField(blank=True, null=True)
     arriving_load = models.IntegerField(blank=True, null=True)
     arrive_quarter_hour = models.FloatField(blank=True, null=True)
+    previous_location_id = models.IntegerField(blank=True, null=True)
+    previous_arrive_time = models.DateTimeField(blank=True, null=True)
+    previous_train_mileage = models.FloatField(blank=True, null=True)
+    id = models.AutoField(primary_key=True)
 
     class Meta:
         managed = False
-        db_table = "bus_passenger_stops"
-        unique_together = (("service_date", "id"),)
+        db_table = 'bus_passenger_stops'
+        unique_together = (('service_date', 'id'),)
+
+
+class BusAmRushSummary(models.Model):
+    location_id = models.IntegerField(blank=True, null=True)
+    route_number = models.IntegerField(blank=True, null=True)
+    direction = models.IntegerField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    geom_point_4326 = models.GeometryField(srid=0, blank=True, null=True)
+    samples = models.BigIntegerField(blank=True, null=True)
+    p05_seconds_late = models.FloatField(blank=True, null=True)
+    q1_seconds_late = models.FloatField(blank=True, null=True)
+    median_seconds_late = models.FloatField(blank=True, null=True)
+    q3_seconds_late = models.FloatField(blank=True, null=True)
+    p95_seconds_late = models.FloatField(blank=True, null=True)
+    iqr_seconds_late = models.FloatField(blank=True, null=True)
+    total_ons = models.BigIntegerField(blank=True, null=True)
+    total_offs = models.BigIntegerField(blank=True, null=True)
+    id = models.BigIntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'bus_am_rush_summary'
+
+
+class BusPmRushSummary(models.Model):
+    location_id = models.IntegerField(blank=True, null=True)
+    route_number = models.IntegerField(blank=True, null=True)
+    direction = models.IntegerField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    geom_point_4326 = models.GeometryField(srid=0, blank=True, null=True)
+    samples = models.BigIntegerField(blank=True, null=True)
+    p05_seconds_late = models.FloatField(blank=True, null=True)
+    q1_seconds_late = models.FloatField(blank=True, null=True)
+    median_seconds_late = models.FloatField(blank=True, null=True)
+    q3_seconds_late = models.FloatField(blank=True, null=True)
+    p95_seconds_late = models.FloatField(blank=True, null=True)
+    iqr_seconds_late = models.FloatField(blank=True, null=True)
+    total_ons = models.BigIntegerField(blank=True, null=True)
+    total_offs = models.BigIntegerField(blank=True, null=True)
+    id = models.BigIntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'bus_pm_rush_summary'
+
+
+class BusRoutes(models.Model):
+    line_id = models.IntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'bus_routes'
+
+
+class BusServiceKeys(models.Model):
+    service_date = models.DateField(primary_key=True)
+    service_key = models.TextField()
+
+    class Meta:
+        managed = False
+        db_table = 'bus_service_keys'
+        unique_together = (('service_date', 'service_key'),)
+
+
+class BusSystemWideSummary(models.Model):
+    arrive_quarter_hour = models.FloatField(primary_key=True)
+    samples = models.BigIntegerField(blank=True, null=True)
+    p05_seconds_late = models.FloatField(blank=True, null=True)
+    q1_seconds_late = models.FloatField(blank=True, null=True)
+    median_seconds_late = models.FloatField(blank=True, null=True)
+    q3_seconds_late = models.FloatField(blank=True, null=True)
+    p95_seconds_late = models.FloatField(blank=True, null=True)
+    iqr_seconds_late = models.FloatField(blank=True, null=True)
+    total_ons = models.BigIntegerField(blank=True, null=True)
+    total_offs = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'bus_system_wide_summary'
 
 
 class BusTrips(models.Model):
@@ -143,6 +235,17 @@ class BusTrips(models.Model):
     class Meta:
         managed = False
         db_table = "bus_trips"
+
+
+class CurrentStopLocations(models.Model):
+    stop_id = models.IntegerField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    geom_point_4326 = models.PointField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'current_stop_locations'
 
 
 class DisturbanceStops(models.Model):
@@ -168,6 +271,21 @@ class DisturbanceStops(models.Model):
         managed = False
         db_table = "disturbance_stops"
         unique_together = (("opd_date", "id"),)
+
+
+class DisturbanceSystemWideSummary(models.Model):
+    start_quarter_hour = models.FloatField(primary_key=True)
+    samples = models.BigIntegerField(blank=True, null=True)
+    p05_duration = models.FloatField(blank=True, null=True)
+    q1_duration = models.FloatField(blank=True, null=True)
+    median_duration = models.FloatField(blank=True, null=True)
+    q3_duration = models.FloatField(blank=True, null=True)
+    p95_duration = models.FloatField(blank=True, null=True)
+    iqr_duration = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'disturbance_system_wide_summary'
 
 
 class DjangoAdminLog(models.Model):
@@ -216,6 +334,91 @@ class DjangoSession(models.Model):
         db_table = "django_session"
 
 
+class HealthCheckDbTestmodel(models.Model):
+    title = models.CharField(max_length=128)
+
+    class Meta:
+        managed = False
+        db_table = 'health_check_db_testmodel'
+
+
+class PassengerCensus(models.Model):
+    summary_begin_date = models.DateField(blank=True, null=True)
+    route_number = models.IntegerField(blank=True, null=True)
+    direction = models.IntegerField(blank=True, null=True)
+    service_key = models.TextField(blank=True, null=True)
+    stop_seq = models.IntegerField(blank=True, null=True)
+    location_id = models.IntegerField(blank=True, null=True)
+    public_location_description = models.TextField(blank=True, null=True)
+    ons = models.IntegerField(blank=True, null=True)
+    offs = models.IntegerField(blank=True, null=True)
+    x_coord = models.FloatField(blank=True, null=True)
+    y_coord = models.FloatField(blank=True, null=True)
+    id = models.BigIntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'passenger_census'
+
+
+class PassengerStopLocations(models.Model):
+    stop_id = models.IntegerField(primary_key=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    geom_point_4326 = models.GeometryField(srid=0, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'passenger_stop_locations'
+
+
+class RailAmRushSummary(models.Model):
+    location_id = models.IntegerField(blank=True, null=True)
+    route_number = models.IntegerField(blank=True, null=True)
+    direction = models.IntegerField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    geom_point_4326 = models.GeometryField(srid=0, blank=True, null=True)
+    samples = models.BigIntegerField(blank=True, null=True)
+    p05_seconds_late = models.FloatField(blank=True, null=True)
+    q1_seconds_late = models.FloatField(blank=True, null=True)
+    median_seconds_late = models.FloatField(blank=True, null=True)
+    q3_seconds_late = models.FloatField(blank=True, null=True)
+    p95_seconds_late = models.FloatField(blank=True, null=True)
+    iqr_seconds_late = models.FloatField(blank=True, null=True)
+    total_ons = models.BigIntegerField(blank=True, null=True)
+    total_offs = models.BigIntegerField(blank=True, null=True)
+    id = models.BigIntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'rail_am_rush_summary'
+
+
+class RailByStopSummary(models.Model):
+    location_id = models.IntegerField(blank=True, null=True)
+    route_number = models.IntegerField(blank=True, null=True)
+    direction = models.IntegerField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    geom_point_4326 = models.GeometryField(srid=0, blank=True, null=True)
+    arrive_quarter_hour = models.FloatField(blank=True, null=True)
+    samples = models.BigIntegerField(blank=True, null=True)
+    p05_seconds_late = models.FloatField(blank=True, null=True)
+    q1_seconds_late = models.FloatField(blank=True, null=True)
+    median_seconds_late = models.FloatField(blank=True, null=True)
+    q3_seconds_late = models.FloatField(blank=True, null=True)
+    p95_seconds_late = models.FloatField(blank=True, null=True)
+    iqr_seconds_late = models.FloatField(blank=True, null=True)
+    monthly_total_ons = models.BigIntegerField(blank=True, null=True)
+    monthly_total_offs = models.BigIntegerField(blank=True, null=True)
+    id = models.BigIntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'rail_by_stop_summary'
+
+
 class RailPassengerStops(models.Model):
     vehicle_id = models.IntegerField(blank=True, null=True)
     service_date = models.DateField(blank=True, null=True)
@@ -243,6 +446,46 @@ class RailPassengerStops(models.Model):
         managed = False
         db_table = "rail_passenger_stops"
         unique_together = (("service_date", "id"),)
+
+
+class RailPmRushSummary(models.Model):
+    location_id = models.IntegerField(blank=True, null=True)
+    route_number = models.IntegerField(blank=True, null=True)
+    direction = models.IntegerField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    geom_point_4326 = models.GeometryField(srid=0, blank=True, null=True)
+    samples = models.BigIntegerField(blank=True, null=True)
+    p05_seconds_late = models.FloatField(blank=True, null=True)
+    q1_seconds_late = models.FloatField(blank=True, null=True)
+    median_seconds_late = models.FloatField(blank=True, null=True)
+    q3_seconds_late = models.FloatField(blank=True, null=True)
+    p95_seconds_late = models.FloatField(blank=True, null=True)
+    iqr_seconds_late = models.FloatField(blank=True, null=True)
+    total_ons = models.BigIntegerField(blank=True, null=True)
+    total_offs = models.BigIntegerField(blank=True, null=True)
+    id = models.BigIntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'rail_pm_rush_summary'
+
+
+class RailSystemWideSummary(models.Model):
+    arrive_quarter_hour = models.FloatField(primary_key=True)
+    samples = models.BigIntegerField(blank=True, null=True)
+    p05_seconds_late = models.FloatField(blank=True, null=True)
+    q1_seconds_late = models.FloatField(blank=True, null=True)
+    median_seconds_late = models.FloatField(blank=True, null=True)
+    q3_seconds_late = models.FloatField(blank=True, null=True)
+    p95_seconds_late = models.FloatField(blank=True, null=True)
+    iqr_seconds_late = models.FloatField(blank=True, null=True)
+    total_ons = models.BigIntegerField(blank=True, null=True)
+    total_offs = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'rail_system_wide_summary'
 
 
 class TmRailStops(models.Model):
