@@ -3,32 +3,41 @@ from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from toad.models import (
-    BusAllStops,
+    BusAmRushSummary,
+    BusPmRushSummary,
     BusPassengerStops,
+    BusByStopSummary,
+    BusSystemWideSummary,
     RailPassengerStops,
+    RailAmRushSummary,
+    RailPmRushSummary,
+    RailByStopSummary,
     DisturbanceStops,
+    DisturbanceSystemWideSummary,
     TrafficSignals,
     TmRailStops,
     TmRouteStops,
+    RailSystemWideSummary,
+    PassengerStopLocations
 )
 from toad.serializers import (
-    BusAllStopsSerializer,
+    BusAmRushSummarySerializer,
+    BusPmRushSummarySerializer,
     BusPassengerStopsSerializer,
+    BusSystemWideSummarySerializer,
+    BusByStopSummarySerializer,
     RailPassengerStopsSerializer,
+    RailAmRushSummarySerializer,
+    RailPmRushSummarySerializer,
+    RailByStopSummarySerializer,
     DisturbanceStopsSerializer,
+    DisturbanceSystemWideSummarySerializer,
     TrafficSignalsSerializer,
     TmRailStopsSerializer,
     TmRouteStopsSerializer,
+    RailSystemWideSummarySerializer,
+    PassengerStopLocationsSerializer
 )
-
-
-# class BusAllStopsViewSet(viewsets.ReadOnlyModelViewSet):
-#     """
-#     This viewset will provide a list of all times a bus stops (scheduled or not).
-#     """
-
-#     queryset = BusAllStops.objects.all()
-#     serializer_class = BusAllStopsSerializer
 
 
 class BusPassengerStopsFilter(DjangoFilterBackend):
@@ -83,6 +92,42 @@ class BusPassengerStopsFilter(DjangoFilterBackend):
         return fields
 
 
+class BusAmRushSummary(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Bus AM rush hour summary statistics.
+    """
+
+    queryset = BusAmRushSummary.objects.all()
+    serializer_class = BusAmRushSummarySerializer
+
+
+class BusPmRushSummary(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Bus PM rush hour summary statistics.
+    """
+
+    queryset = BusPmRushSummary.objects.all()
+    serializer_class = BusPmRushSummarySerializer
+
+
+class BusSystemWideSummary(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Bus System Wide summary statistics.
+    """
+
+    queryset = BusSystemWideSummary.objects.all()
+    serializer_class = BusSystemWideSummarySerializer
+
+
+class BusByStopSummary(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Bus By Stop summary statistics.
+    """
+
+    queryset = BusByStopSummary.objects.all()
+    serializer_class = BusByStopSummarySerializer
+
+
 class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points from scheduled stop events along TriMet bus routes.
@@ -116,7 +161,7 @@ class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
             except ValueError:
                 raise ValidationError(
                     {"stop_id": f"'{stops}' is an invalid format."}
-                )                    
+                )
             except Exception:
                 raise ValidationError({"stop_id": f"'{stops}' - unknown error."})
 
@@ -127,7 +172,7 @@ class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
             except ValueError:
                 raise ValidationError(
                     {"direction": f"'{directions}' is an invalid format."}
-                )                    
+                )
             except Exception:
                 raise ValidationError({"direction": f"'{directions}' - unknown error."})                
 
@@ -138,7 +183,7 @@ class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
             except ValueError:
                 raise ValidationError(
                     {"service_key": f"'{service_key}' is an invalid format."}
-                )                    
+                )
             except Exception:
                 raise ValidationError({"service_key": f"'{service_key}' - unknown error."})   
 
@@ -151,7 +196,7 @@ class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
             except ValueError:
                 raise ValidationError(
                     {"time_range": f"'{time_range}' is an invalid format."}
-                )                    
+                )
             except Exception:
                 raise ValidationError({"time_range": f"'{time_range}' - unknown error."})                   
 
@@ -285,6 +330,42 @@ class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = RailPassengerStops.objects.filter(**filters)
 
         return queryset
+
+
+class RailAmRushSummary(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Rail AM rush hour summary statistics.
+    """
+
+    queryset = RailAmRushSummary.objects.all()
+    serializer_class = RailAmRushSummarySerializer
+
+
+class RailPmRushSummary(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Rail PM rush hour summary statistics.
+    """
+
+    queryset = RailPmRushSummary.objects.all()
+    serializer_class = RailPmRushSummarySerializer
+
+
+class RailByStopSummary(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Rail By Stop summary statistics.
+    """
+
+    queryset = RailByStopSummary.objects.all()
+    serializer_class = RailByStopSummarySerializer
+
+
+class RailSystemWideSummary(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Rail System Wide summary statistics.
+    """
+
+    queryset = RailSystemWideSummary.objects.all()
+    serializer_class = RailSystemWideSummarySerializer
 
 
 class DisturbanceStopsFilter(DjangoFilterBackend):
@@ -458,6 +539,15 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
+class DisturbanceSystemWideSummary(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Disturbance System Wide summary statistics.
+    """
+
+    queryset = DisturbanceSystemWideSummary.objects.all()
+    serializer_class = DisturbanceSystemWideSummarySerializer
+
+
 class TrafficSignalsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of traffic signal locations in the Portland area.
@@ -485,3 +575,12 @@ class TmRailStopsViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = TmRailStops.objects.all()
     serializer_class = TmRailStopsSerializer
+
+
+class PassengerStopLocations(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Passenger Stop Locations.
+    """
+
+    queryset = PassengerStopLocations.objects.all()
+    serializer_class = PassengerStopLocationsSerializer
