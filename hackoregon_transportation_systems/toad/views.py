@@ -1,6 +1,7 @@
 import coreapi
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.exceptions import ValidationError
 from toad.models import (
     BusAllStops,
     BusPassengerStops,
@@ -228,7 +229,7 @@ class DisturbanceStopsFilter(DjangoFilterBackend):
         fields = [
             coreapi.Field(
                 name="months",
-                required=False,
+                required=True,
                 location="query",
                 type="string",
                 description="Months to filter on (integer). Only September (9), October (10) and November (11) are available. Example: '9,10' to include September and October.",
@@ -242,7 +243,7 @@ class DisturbanceStopsFilter(DjangoFilterBackend):
             ),
             coreapi.Field(
                 name="years",
-                required=False,
+                required=True,
                 location="query",
                 type="string",
                 description="Years to filter on. Only 2017 and 2018 are available. Example: '2017' or '2017,2018'.",
@@ -303,12 +304,20 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         filters = {}
         # really could use the assignment operator here :)
         months = self.request.query_params.get("months", False)
-        if months:
-            filters["month__in"] = [int(m) for m in months.split(",")]
-
         years = self.request.query_params.get("years", False)
-        if years:
+        if months and years:
+            filters["month__in"] = [int(m) for m in months.split(",")]
             filters["year__in"] = [int(y) for y in years.split(",")]
+        else:
+            if not months and not years:
+                raise ValidationError({
+                    "year": f"'year' - Parameter is required.",
+                    "month": f"'month' - Parameter is required."
+                    })
+            elif not months:
+                raise ValidationError({"month": f"'month' - Parameter is required."})
+            else:
+                raise ValidationError({"year": f"'year' - parameter is required."})
 
         lines = self.request.query_params.get("lines", False)
         if lines:
