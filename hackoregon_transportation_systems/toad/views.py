@@ -20,6 +20,9 @@ from toad.models import (
     RailSystemWideSummary,
     PassengerStopLocations
 )
+
+from toad.pre_existing_models import NcdbSampleTransportationCommute
+
 from toad.serializers import (
     BusAmRushSummarySerializer,
     BusPmRushSummarySerializer,
@@ -36,7 +39,8 @@ from toad.serializers import (
     TmRailStopsSerializer,
     TmRouteStopsSerializer,
     RailSystemWideSummarySerializer,
-    PassengerStopLocationsSerializer
+    PassengerStopLocationsSerializer,
+    NcdbSampleTransportationCommuteSerializer
 )
 
 
@@ -584,3 +588,11 @@ class PassengerStopLocations(viewsets.ReadOnlyModelViewSet):
 
     queryset = PassengerStopLocations.objects.all()
     serializer_class = PassengerStopLocationsSerializer
+
+class NcdbSampleTransportationCommuteViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON points of Passenger Stop Locations.
+    """
+
+    queryset = NcdbSampleTransportationCommute.objects.all()
+    serializer_class = NcdbSampleTransportationCommuteSerializer

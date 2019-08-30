@@ -1,5 +1,6 @@
 # from rest_framework import serializers
 from rest_framework_gis import serializers
+
 from toad.models import (
     DisturbanceStops,
     DisturbanceSystemWideSummary,
@@ -18,6 +19,8 @@ from toad.models import (
     RailByStopSummary,
     PassengerStopLocations
 )
+
+from toad.pre_existing_models import NcdbSampleTransportationCommute
 
 
 class BusAmRushSummarySerializer(serializers.GeoFeatureModelSerializer):
@@ -140,3 +143,10 @@ class PassengerStopLocationsSerializer(serializers.ModelSerializer):
         model = PassengerStopLocations
         fields = "__all__"
         id = "stop_id"
+
+class NcdbSampleTransportationCommuteSerializer(serializers.GeoFeatureModelSerializer):
+    class Meta:
+        model = NcdbSampleTransportationCommute
+        fields = "__all__"
+        geo_field = "geom_multpoly_4326"
+        #id = "id"

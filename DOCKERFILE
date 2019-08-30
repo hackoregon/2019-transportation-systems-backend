@@ -11,7 +11,9 @@ COPY /requirements/* /code/
 # Copy the django apps to be installed locally via pip
 COPY hackoregon_transportation_systems /code/hackoregon_transportation_systems
 
-RUN ls
+# upgrade pip itself before using it
+RUN pip install --upgrade pip
+
 RUN if [ "$DEBUG" = true  ] ; then pip install -r development.txt ; else pip install -r production.txt ; fi
 
 RUN python
