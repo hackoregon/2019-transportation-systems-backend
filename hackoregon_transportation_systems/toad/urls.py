@@ -29,5 +29,6 @@ router.register(
 )
 router.register(r"tmRailStops", views.TmRailStopsViewSet, basename="tm-rail-stops")
 router.register(r"tmRouteStops", views.TmRouteStopsViewSet, basename="tm-route-stops")
+router.register(r"ncdbSampleTransportationCommutes", views.NcdbSampleTransportationCommuteViewSet, basename="ncdb-sample-transportation-commutes")
 
 urlpatterns = [url(r"^", include(router.urls))]
