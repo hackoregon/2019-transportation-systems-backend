@@ -17,7 +17,7 @@ echo Debug: $DEBUG
 echo Travis: $TRAVIS
 
 if [ $DEBUG = "false" ] && [ $TRAVIS = "false" ]; then
-  source /code/bin/get-ssm-parameters.sh
+  source /code/src_files/scripts/deploy/get-ssm-parameters.sh
 fi
 
 >&2 echo "Postgres is up"
