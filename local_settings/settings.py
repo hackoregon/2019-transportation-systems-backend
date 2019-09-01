@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "health_check.storage",
     "health_check.contrib.psutil",  # disk and memory utilization; requires psutil
     "toad",
+    "crispy_forms",
 ]
 
 HEALTH_CHECK = {"DISK_USAGE_MAX": 90, "MEMORY_MIN": 100}  # percent  # in MB
