@@ -595,4 +595,5 @@ class NcdbSampleTransportationCommuteViewSet(viewsets.ReadOnlyModelViewSet):
     """
 
     queryset = NcdbSampleTransportationCommute.objects.all()
-    serializer_class = NcdbSampleTransportationCommuteSerializer
+    serializer_class = NcdbSampleTransportationCommuteSerializer    
+    filterset_fields = ('opp_zone', )

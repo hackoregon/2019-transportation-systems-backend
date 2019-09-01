@@ -1,1 +1,3 @@
 # Space to add python packages common to both testing and development
+
+django-crispy-forms==1.7.2
