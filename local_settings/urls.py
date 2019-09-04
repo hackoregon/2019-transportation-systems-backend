@@ -8,6 +8,7 @@ from rest_framework.schemas import SchemaGenerator
 from rest_framework.views import APIView
 from rest_framework_swagger import renderers
 from rest_framework_swagger.views import get_swagger_view
+from rest_framework.documentation import include_docs_urls
 
 router = DefaultRouter()
 
@@ -53,6 +54,10 @@ schema_view = get_swagger_view(title="Hack Oregon Transportation Systems 2019 AP
 
 urlpatterns = [
     url(r"^transportation2019/v1/schema/", schema_view),
+    url(
+        r'^transportation2019/v1/docs/',
+        include_docs_urls(title="Hack Oregon Transportation Systems 2019 API")
+    ),
     url(
         r"^transportation2019/v1/toad/",
         include("hackoregon_transportation_systems.toad.urls"),
