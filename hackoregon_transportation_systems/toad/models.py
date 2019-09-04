@@ -89,8 +89,8 @@ class BusByStopSummary(models.Model):
     q3_seconds_late = models.FloatField(blank=True, null=True)
     p95_seconds_late = models.FloatField(blank=True, null=True)
     iqr_seconds_late = models.FloatField(blank=True, null=True)
-    monthly_total_ons = models.BigIntegerField(blank=True, null=True)
-    monthly_total_offs = models.BigIntegerField(blank=True, null=True)
+    total_ons = models.BigIntegerField(blank=True, null=True)
+    total_offs = models.BigIntegerField(blank=True, null=True)
     id = models.BigIntegerField(primary_key=True)
 
     class Meta:
@@ -410,8 +410,8 @@ class RailByStopSummary(models.Model):
     q3_seconds_late = models.FloatField(blank=True, null=True)
     p95_seconds_late = models.FloatField(blank=True, null=True)
     iqr_seconds_late = models.FloatField(blank=True, null=True)
-    monthly_total_ons = models.BigIntegerField(blank=True, null=True)
-    monthly_total_offs = models.BigIntegerField(blank=True, null=True)
+    total_ons = models.BigIntegerField(blank=True, null=True)
+    total_offs = models.BigIntegerField(blank=True, null=True)
     id = models.BigIntegerField(primary_key=True)
 
     class Meta:
