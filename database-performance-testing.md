@@ -17,14 +17,14 @@ Setup:
 3. When the build finishes, type `bin/start.sh -d`. This will start an API container connected to the database. You
 should see something like this:
 
-```
-api_1  | Run server...
-api_1  | [2019-09-05 03:36:50 +0000] [16] [INFO] Starting gunicorn 19.9.0
-api_1  | [2019-09-05 03:36:50 +0000] [16] [INFO] Listening at: http://0.0.0.0:8000 (16)
-api_1  | [2019-09-05 03:36:50 +0000] [16] [INFO] Using worker: sync
-api_1  | [2019-09-05 03:36:50 +0000] [16] [INFO] Server is ready. Spawning workers
-api_1  | [2019-09-05 03:36:50 +0000] [19] [INFO] Booting worker with pid: 19
-```
+    ```
+    api_1  | Run server...
+    api_1  | [2019-09-05 03:36:50 +0000] [16] [INFO] Starting gunicorn 19.9.0
+    api_1  | [2019-09-05 03:36:50 +0000] [16] [INFO] Listening at: http://0.0.0.0:8000 (16)
+    api_1  | [2019-09-05 03:36:50 +0000] [16] [INFO] Using worker: sync
+    api_1  | [2019-09-05 03:36:50 +0000] [16] [INFO] Server is ready. Spawning workers
+    api_1  | [2019-09-05 03:36:50 +0000] [19] [INFO] Booting worker with pid: 19
+    ```
 
 ## Exercising the API
 1. Browse to your API. It should be accessible via the Swagger UI at `http://localhost:8000/<project>/v1/schema/`, where `<project>` is your project name. For this demo, it's `transportation2019`.
