@@ -96,7 +96,7 @@ class BusPassengerStopsFilter(DjangoFilterBackend):
         return fields
 
 
-class BusAmRushSummary(viewsets.ReadOnlyModelViewSet):
+class BusAmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Bus AM rush hour summary statistics.
     """
@@ -105,7 +105,7 @@ class BusAmRushSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = BusAmRushSummarySerializer
 
 
-class BusPmRushSummary(viewsets.ReadOnlyModelViewSet):
+class BusPmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Bus PM rush hour summary statistics.
     """
@@ -114,7 +114,7 @@ class BusPmRushSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = BusPmRushSummarySerializer
 
 
-class BusSystemWideSummary(viewsets.ReadOnlyModelViewSet):
+class BusSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Bus System Wide summary statistics.
     """
@@ -123,7 +123,7 @@ class BusSystemWideSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = BusSystemWideSummarySerializer
 
 
-class BusByStopSummary(viewsets.ReadOnlyModelViewSet):
+class BusByStopSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Bus By Stop summary statistics.
     """
@@ -336,7 +336,7 @@ class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
-class RailAmRushSummary(viewsets.ReadOnlyModelViewSet):
+class RailAmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Rail AM rush hour summary statistics.
     """
@@ -345,7 +345,7 @@ class RailAmRushSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = RailAmRushSummarySerializer
 
 
-class RailPmRushSummary(viewsets.ReadOnlyModelViewSet):
+class RailPmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Rail PM rush hour summary statistics.
     """
@@ -354,7 +354,7 @@ class RailPmRushSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = RailPmRushSummarySerializer
 
 
-class RailByStopSummary(viewsets.ReadOnlyModelViewSet):
+class RailByStopSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Rail By Stop summary statistics.
     """
@@ -363,7 +363,7 @@ class RailByStopSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = RailByStopSummarySerializer
 
 
-class RailSystemWideSummary(viewsets.ReadOnlyModelViewSet):
+class RailSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Rail System Wide summary statistics.
     """
@@ -543,7 +543,7 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
-class DisturbanceSystemWideSummary(viewsets.ReadOnlyModelViewSet):
+class DisturbanceSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Disturbance System Wide summary statistics.
     """
@@ -581,13 +581,14 @@ class TmRailStopsViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = TmRailStopsSerializer
 
 
-class PassengerStopLocations(viewsets.ReadOnlyModelViewSet):
+class PassengerStopLocationsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Passenger Stop Locations.
     """
 
     queryset = PassengerStopLocations.objects.all()
     serializer_class = PassengerStopLocationsSerializer
+
 
 class NcdbSampleTransportationCommuteViewSet(viewsets.ReadOnlyModelViewSet):
     """
