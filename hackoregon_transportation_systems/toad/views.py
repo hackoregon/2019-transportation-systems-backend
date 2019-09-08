@@ -398,11 +398,7 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
             except Exception:
                 raise ValidationError({"bound": f"'{bounds}' - unknown error."})                 
 
-        num = self.request.query_params.get("num", False)
-        if num:
-            queryset = DisturbanceStops.objects.filter(**filters)[: int(num)]
-        else:
-            queryset = DisturbanceStops.objects.filter(**filters)
+        queryset = DisturbanceStops.objects.filter(**filters)
 
         return queryset
 

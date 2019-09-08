@@ -22,12 +22,11 @@ RUN python
 RUN mkdir src_files
 
 # Copy all scripts and make sure they are executable
-COPY bin /code/src_files/bin/
+COPY scripts /code/src_files/scripts/
 RUN chmod +x *.py
 
 # Copy settings and staticfiles to make sure they are baked into the container
 # rather than always expecting them to be mounted at runtime.
 COPY local_settings /code/src_files/local_settings
-# COPY staticfiles /code/src_files/staticfiles
 
-ENTRYPOINT [ "/code/src_files/bin/docker-entrypoint.sh" ]
+ENTRYPOINT [ "/code/src_files/scripts/build-run/docker-entrypoint.sh" ]

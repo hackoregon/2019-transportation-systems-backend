@@ -192,12 +192,5 @@ class DisturbanceStopsFilter(DjangoFilterBackend):
                 type="string",
                 description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
             ),
-            coreapi.Field(
-                name="num",
-                required=False,
-                location="query",
-                type="integer",
-                description="Development only. Number of results to return so that the API doesn't hang.",
-            ),
         ]
         return fields
