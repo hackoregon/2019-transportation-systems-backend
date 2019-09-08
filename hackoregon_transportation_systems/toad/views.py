@@ -45,7 +45,11 @@ from toad.filters import (
     BusPassengerStopsFilter,
     RailPassengerStopsFilter,
     DisturbanceStopsFilter,
+    BusAmRushSummaryFilter,
+    BusPmRushSummaryFilter,
     BusByStopSummaryFilter,
+    RailAmRushSummaryFilter,
+    RailPmRushSummaryFilter,
     RailByStopSummaryFilter
 )
 
@@ -55,8 +59,55 @@ class BusAmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     This endpoint returns GeoJSON points of Bus AM rush hour summary statistics.
     """
 
-    queryset = BusAmRushSummary.objects.all()
     serializer_class = BusAmRushSummarySerializer
+    filter_backends = (BusAmRushSummaryFilter,)
+
+    def get_queryset(self):
+        """
+        Filters against query parameters in the URL.
+        """
+
+        filters = {}
+        # really could use the assignment operator here :)
+
+        lines = self.request.query_params.get("lines", False)
+        if lines:
+            try:
+                filters["route_number__in"] = [int(l) for l in lines.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"route_number": f"'{lines}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"route_number": f"'{lines}' - unknown error."})
+
+        directions = self.request.query_params.get("directions", False)
+        if directions:
+            try:
+                filters["direction__in"] = [int(d) for d in directions.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"direction": f"'{directions}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"direction": f"'{directions}' - unknown error."})                   
+
+        bounds = self.request.query_params.get("bounds", False)
+        if bounds:
+            try:
+                min_lon, min_lat, max_lon, max_lat = [float(b) for b in bounds.split(",")]
+                filters["latitude__range"] = [min_lat, max_lat]
+                filters["longitude__range"] = [min_lon, max_lon]
+            except ValueError:
+                raise ValidationError(
+                    {"bound": f"'{bounds}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"bound": f"'{bounds}' - unknown error."})                 
+
+        queryset = BusAmRushSummary.objects.filter(**filters)
+
+        return queryset
 
 
 class BusPmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -64,8 +115,55 @@ class BusPmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     This endpoint returns GeoJSON points of Bus PM rush hour summary statistics.
     """
 
-    queryset = BusPmRushSummary.objects.all()
     serializer_class = BusPmRushSummarySerializer
+    filter_backends = (BusPmRushSummaryFilter,)
+
+    def get_queryset(self):
+        """
+        Filters against query parameters in the URL.
+        """
+
+        filters = {}
+        # really could use the assignment operator here :)
+
+        lines = self.request.query_params.get("lines", False)
+        if lines:
+            try:
+                filters["route_number__in"] = [int(l) for l in lines.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"route_number": f"'{lines}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"route_number": f"'{lines}' - unknown error."})
+
+        directions = self.request.query_params.get("directions", False)
+        if directions:
+            try:
+                filters["direction__in"] = [int(d) for d in directions.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"direction": f"'{directions}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"direction": f"'{directions}' - unknown error."})                   
+
+        bounds = self.request.query_params.get("bounds", False)
+        if bounds:
+            try:
+                min_lon, min_lat, max_lon, max_lat = [float(b) for b in bounds.split(",")]
+                filters["latitude__range"] = [min_lat, max_lat]
+                filters["longitude__range"] = [min_lon, max_lon]
+            except ValueError:
+                raise ValidationError(
+                    {"bound": f"'{bounds}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"bound": f"'{bounds}' - unknown error."})                 
+
+        queryset = BusPmRushSummary.objects.filter(**filters)
+
+        return queryset
 
 
 class BusSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -324,8 +422,55 @@ class RailAmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     This endpoint returns GeoJSON points of Rail AM rush hour summary statistics.
     """
 
-    queryset = RailAmRushSummary.objects.all()
     serializer_class = RailAmRushSummarySerializer
+    filter_backends = (RailAmRushSummaryFilter,)
+
+    def get_queryset(self):
+        """
+        Filters against query parameters in the URL.
+        """
+
+        filters = {}
+        # really could use the assignment operator here :)
+
+        lines = self.request.query_params.get("lines", False)
+        if lines:
+            try:
+                filters["route_number__in"] = [int(l) for l in lines.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"route_number": f"'{lines}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"route_number": f"'{lines}' - unknown error."})
+
+        directions = self.request.query_params.get("directions", False)
+        if directions:
+            try:
+                filters["direction__in"] = [int(d) for d in directions.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"direction": f"'{directions}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"direction": f"'{directions}' - unknown error."})                   
+
+        bounds = self.request.query_params.get("bounds", False)
+        if bounds:
+            try:
+                min_lon, min_lat, max_lon, max_lat = [float(b) for b in bounds.split(",")]
+                filters["latitude__range"] = [min_lat, max_lat]
+                filters["longitude__range"] = [min_lon, max_lon]
+            except ValueError:
+                raise ValidationError(
+                    {"bound": f"'{bounds}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"bound": f"'{bounds}' - unknown error."})                 
+
+        queryset = RailAmRushSummary.objects.filter(**filters)
+
+        return queryset
 
 
 class RailPmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -333,8 +478,55 @@ class RailPmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     This endpoint returns GeoJSON points of Rail PM rush hour summary statistics.
     """
 
-    queryset = RailPmRushSummary.objects.all()
     serializer_class = RailPmRushSummarySerializer
+    filter_backends = (RailPmRushSummaryFilter,)
+
+    def get_queryset(self):
+        """
+        Filters against query parameters in the URL.
+        """
+
+        filters = {}
+        # really could use the assignment operator here :)
+
+        lines = self.request.query_params.get("lines", False)
+        if lines:
+            try:
+                filters["route_number__in"] = [int(l) for l in lines.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"route_number": f"'{lines}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"route_number": f"'{lines}' - unknown error."})
+
+        directions = self.request.query_params.get("directions", False)
+        if directions:
+            try:
+                filters["direction__in"] = [int(d) for d in directions.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"direction": f"'{directions}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"direction": f"'{directions}' - unknown error."})                   
+
+        bounds = self.request.query_params.get("bounds", False)
+        if bounds:
+            try:
+                min_lon, min_lat, max_lon, max_lat = [float(b) for b in bounds.split(",")]
+                filters["latitude__range"] = [min_lat, max_lat]
+                filters["longitude__range"] = [min_lon, max_lon]
+            except ValueError:
+                raise ValidationError(
+                    {"bound": f"'{bounds}' is an invalid format."}
+                )                    
+            except Exception:
+                raise ValidationError({"bound": f"'{bounds}' - unknown error."})                 
+
+        queryset = RailPmRushSummary.objects.filter(**filters)
+
+        return queryset
 
 
 class RailByStopSummaryViewSet(viewsets.ReadOnlyModelViewSet):

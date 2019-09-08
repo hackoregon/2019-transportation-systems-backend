@@ -4,7 +4,11 @@ from toad.models import (
     BusPassengerStops,
     DisturbanceStops,
     RailPassengerStops,
+    BusAmRushSummary,
+    BusPmRushSummary,
     BusByStopSummary,
+    RailAmRushSummary,
+    RailPmRushSummary,
     RailByStopSummary
 )
 
@@ -202,6 +206,78 @@ class DisturbanceStopsFilter(DjangoFilterBackend):
         return fields
 
 
+class BusAmRushSummaryFilter(DjangoFilterBackend):
+    """
+    This filter is used to inject custom filter fields into the schema.
+    """
+
+    class Meta:
+        model = BusAmRushSummary
+
+    def get_schema_fields(self, view):
+        fields = [
+            coreapi.Field(
+                name="bounds",
+                required=False,
+                location="query",
+                type="string",
+                description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
+            ),
+            coreapi.Field(
+                name="lines",
+                required=False,
+                location="query",
+                type="string",
+                description="Bus routes to include. Example: '10,14' for routes 10 and 14.",
+            ),
+            coreapi.Field(
+                name="directions",
+                required=False,
+                location="query",
+                type="string",
+                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\t1,0\n\nReturns data from both directions of a route.",
+            ),
+        ]
+
+        return fields
+
+
+class BusPmRushSummaryFilter(DjangoFilterBackend):
+    """
+    This filter is used to inject custom filter fields into the schema.
+    """
+
+    class Meta:
+        model = BusPmRushSummary
+
+    def get_schema_fields(self, view):
+        fields = [
+            coreapi.Field(
+                name="bounds",
+                required=False,
+                location="query",
+                type="string",
+                description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
+            ),
+            coreapi.Field(
+                name="lines",
+                required=False,
+                location="query",
+                type="string",
+                description="Bus routes to include. Example: '10,14' for routes 10 and 14.",
+            ),
+            coreapi.Field(
+                name="directions",
+                required=False,
+                location="query",
+                type="string",
+                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\t1,0\n\nReturns data from both directions of a route.",
+            ),
+        ]
+
+        return fields
+
+
 class BusByStopSummaryFilter(DjangoFilterBackend):
     """
     This filter is used to inject custom filter fields into the schema.
@@ -225,6 +301,78 @@ class BusByStopSummaryFilter(DjangoFilterBackend):
                 location="query",
                 type="string",
                 description="Bus routes to include. Example: '10,14' for routes 10 and 14.",
+            ),
+            coreapi.Field(
+                name="directions",
+                required=False,
+                location="query",
+                type="string",
+                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\t1,0\n\nReturns data from both directions of a route.",
+            ),
+        ]
+
+        return fields
+
+
+class RailAmRushSummaryFilter(DjangoFilterBackend):
+    """
+    This filter is used to inject custom filter fields into the schema.
+    """
+
+    class Meta:
+        model = RailAmRushSummary
+
+    def get_schema_fields(self, view):
+        fields = [
+            coreapi.Field(
+                name="bounds",
+                required=False,
+                location="query",
+                type="string",
+                description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
+            ),
+            coreapi.Field(
+                name="lines",
+                required=False,
+                location="query",
+                type="string",
+                description="Rail routes to include. `90` - RED, `100` - BLUE, `190` - YELLOW, `200` - GREEN, `290` - ORANGE. Example: '90,100' for the RED and BLUE lines.",
+            ),
+            coreapi.Field(
+                name="directions",
+                required=False,
+                location="query",
+                type="string",
+                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\t1,0\n\nReturns data from both directions of a route.",
+            ),
+        ]
+
+        return fields
+
+
+class RailPmRushSummaryFilter(DjangoFilterBackend):
+    """
+    This filter is used to inject custom filter fields into the schema.
+    """
+
+    class Meta:
+        model = RailPmRushSummary
+
+    def get_schema_fields(self, view):
+        fields = [
+            coreapi.Field(
+                name="bounds",
+                required=False,
+                location="query",
+                type="string",
+                description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
+            ),
+            coreapi.Field(
+                name="lines",
+                required=False,
+                location="query",
+                type="string",
+                description="Rail routes to include. `90` - RED, `100` - BLUE, `190` - YELLOW, `200` - GREEN, `290` - ORANGE. Example: '90,100' for the RED and BLUE lines.",
             ),
             coreapi.Field(
                 name="directions",
