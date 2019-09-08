@@ -1,6 +1,12 @@
 import coreapi
 from django_filters.rest_framework import DjangoFilterBackend
-from toad.models import BusPassengerStops, DisturbanceStops, RailPassengerStops
+from toad.models import (
+    BusPassengerStops,
+    DisturbanceStops,
+    RailPassengerStops,
+    BusByStopSummary,
+    RailByStopSummary
+)
 
 
 class BusPassengerStopsFilter(DjangoFilterBackend):
@@ -193,4 +199,76 @@ class DisturbanceStopsFilter(DjangoFilterBackend):
                 description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
             ),
         ]
+        return fields
+
+
+class BusByStopSummaryFilter(DjangoFilterBackend):
+    """
+    This filter is used to inject custom filter fields into the schema.
+    """
+
+    class Meta:
+        model = BusByStopSummary
+
+    def get_schema_fields(self, view):
+        fields = [
+            coreapi.Field(
+                name="bounds",
+                required=False,
+                location="query",
+                type="string",
+                description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
+            ),
+            coreapi.Field(
+                name="lines",
+                required=False,
+                location="query",
+                type="string",
+                description="Bus routes to include. Example: '10,14' for routes 10 and 14.",
+            ),
+            coreapi.Field(
+                name="directions",
+                required=False,
+                location="query",
+                type="string",
+                description="Line direction. 'I' for Inbound, 'O' for Outbound. Example: 'I,O'.",
+            ),
+        ]
+
+        return fields
+
+
+class RailByStopSummaryFilter(DjangoFilterBackend):
+    """
+    This filter is used to inject custom filter fields into the schema.
+    """
+
+    class Meta:
+        model = RailByStopSummary
+
+    def get_schema_fields(self, view):
+        fields = [
+            coreapi.Field(
+                name="bounds",
+                required=False,
+                location="query",
+                type="string",
+                description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
+            ),
+            coreapi.Field(
+                name="lines",
+                required=False,
+                location="query",
+                type="string",
+                description="Rail routes to include. `90` - RED, `100` - BLUE, `190` - YELLOW, `200` - GREEN, `290` - ORANGE. Example: '90,100' for the RED and BLUE lines.",
+            ),
+            coreapi.Field(
+                name="directions",
+                required=False,
+                location="query",
+                type="string",
+                description="Line direction. 'I' for Inbound, 'O' for Outbound. Example: 'I,O'.",
+            ),
+        ]
+
         return fields
