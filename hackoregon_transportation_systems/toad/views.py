@@ -99,6 +99,22 @@ class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
 
         filters = {}
         # really could use the assignment operator here :)
+        months = self.request.query_params.get("months", False)
+        years = self.request.query_params.get("years", False)
+        if months and years:
+            filters["month__in"] = [int(m) for m in months.split(",")]
+            filters["year__in"] = [int(y) for y in years.split(",")]
+        else:
+            if not months and not years:
+                raise ValidationError({
+                    "year": f"'year' - Parameter is required.",
+                    "month": f"'month' - Parameter is required."
+                    })
+            elif not months:
+                raise ValidationError({"month": f"'month' - Parameter is required."})
+            else:
+                raise ValidationError({"year": f"'year' - parameter is required."})
+
         lines = self.request.query_params.get("lines", False)
         if lines:
             try:
@@ -175,6 +191,22 @@ class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
         """
 
         filters = {}
+        months = self.request.query_params.get("months", False)
+        years = self.request.query_params.get("years", False)
+        if months and years:
+            filters["month__in"] = [int(m) for m in months.split(",")]
+            filters["year__in"] = [int(y) for y in years.split(",")]
+        else:
+            if not months and not years:
+                raise ValidationError({
+                    "year": f"'year' - Parameter is required.",
+                    "month": f"'month' - Parameter is required."
+                    })
+            elif not months:
+                raise ValidationError({"month": f"'month' - Parameter is required."})
+            else:
+                raise ValidationError({"year": f"'year' - parameter is required."})
+
         # really could use the assignment operator here :)
         lines = self.request.query_params.get("lines", False)
         if lines:
