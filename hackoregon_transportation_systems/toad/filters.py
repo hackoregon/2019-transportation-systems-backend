@@ -231,7 +231,7 @@ class BusByStopSummaryFilter(DjangoFilterBackend):
                 required=False,
                 location="query",
                 type="string",
-                description="Line direction. 'I' for Inbound, 'O' for Outbound. Example: 'I,O'.",
+                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\t1,0\n\nReturns data from both directions of a route.",
             ),
         ]
 
@@ -267,7 +267,7 @@ class RailByStopSummaryFilter(DjangoFilterBackend):
                 required=False,
                 location="query",
                 type="string",
-                description="Line direction. 'I' for Inbound, 'O' for Outbound. Example: 'I,O'.",
+                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\t1,0\n\nReturns data from both directions of a route.",
             ),
         ]
 
