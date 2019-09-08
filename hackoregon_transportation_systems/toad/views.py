@@ -1,6 +1,4 @@
-import coreapi
 from rest_framework import viewsets
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from toad.models import (
     BusAmRushSummary,
@@ -43,60 +41,14 @@ from toad.serializers import (
     NcdbSampleTransportationCommuteSerializer
 )
 
-
-class BusPassengerStopsFilter(DjangoFilterBackend):
-    """
-    This filter is used to inject custom filter fields into the schema.
-    """
-
-    class Meta:
-        model = BusPassengerStops
-
-    def get_schema_fields(self, view):
-        fields = [
-            coreapi.Field(
-                name="lines",
-                required=False,
-                location="query",
-                type="string",
-                description="Bus route numbers to include, separated by a comma.\n\nExample:\t10,14\n\nReturns data for only routes 10 and 14.",
-            ),
-            coreapi.Field(
-                name="stops",
-                required=False,
-                location="query",
-                type="string",
-                description="Stop ids to include, separated by a comma.\n\nExample:\tstopid1,stopid2,stopid3\n\nReturns data for only these stops.",
-            ),
-            coreapi.Field(
-                name="time_range",
-                required=False,
-                location="query",
-                type="string",
-                description=(
-                    "Decimal time range to filter on (24 hour). Formatted as 'START,STOP', where START and STOP are numbers. Both START and STOP are required. The decimal format is converted to correct time format.\n\nExample:\t6.25,9.5\n\nReturns data filtered from 6:15 am to 9:30 am."
-                ),
-            ),
-            coreapi.Field(
-                name="service_key",
-                required=False,
-                location="query",
-                type="string",
-                description="Service Key\n\nW - Weekdays\nS - Saturday\nU - Sunday\nX - Holiday",
-            ),
-            coreapi.Field(
-                name="directions",
-                required=False,
-                location="query",
-                type="string",
-                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\t1,0\n\nReturns data from both directions of a route.",
-            ),
-        ]
-
-        return fields
+from toad.filters import (
+    BusPassengerStopsFilter,
+    RailPassengerStopsFilter,
+    DisturbanceStopsFilter
+)
 
 
-class BusAmRushSummary(viewsets.ReadOnlyModelViewSet):
+class BusAmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Bus AM rush hour summary statistics.
     """
@@ -105,7 +57,7 @@ class BusAmRushSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = BusAmRushSummarySerializer
 
 
-class BusPmRushSummary(viewsets.ReadOnlyModelViewSet):
+class BusPmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Bus PM rush hour summary statistics.
     """
@@ -114,7 +66,7 @@ class BusPmRushSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = BusPmRushSummarySerializer
 
 
-class BusSystemWideSummary(viewsets.ReadOnlyModelViewSet):
+class BusSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Bus System Wide summary statistics.
     """
@@ -123,7 +75,7 @@ class BusSystemWideSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = BusSystemWideSummarySerializer
 
 
-class BusByStopSummary(viewsets.ReadOnlyModelViewSet):
+class BusByStopSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Bus By Stop summary statistics.
     """
@@ -209,56 +161,6 @@ class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
-class RailPassengerStopsFilter(DjangoFilterBackend):
-    """
-    This filter is used to inject custom filter fields into the schema.
-    """
-
-    class Meta:
-        model = RailPassengerStops
-
-    def get_schema_fields(self, view):
-        fields = [
-            coreapi.Field(
-                name="lines",
-                required=False,
-                location="query",
-                type="string",
-                description="Rail routes to include. `90` - RED, `100` - BLUE, `190` - YELLOW, `200` - GREEN, `290` - ORANGE. Example: '90,100' for the RED and BLUE lines.",
-            ),
-            coreapi.Field(
-                name="stops",
-                required=False,
-                location="query",
-                type="string",
-                description="Stop ids to include. Example:",
-            ),
-            coreapi.Field(
-                name="time_range",
-                required=False,
-                location="query",
-                type="string",
-                description="Quarter hour time range to filter on. Example: '6.25,9.5' would filter from 6:15 am to 9:30 am",
-            ),
-            coreapi.Field(
-                name="service_key",
-                required=False,
-                location="query",
-                type="string",
-                description="Service Key ('A' - Weekday MAX, 'B' - Saturday MAX, 'C' - Sunday MAX).",
-            ),
-            coreapi.Field(
-                name="directions",
-                required=False,
-                location="query",
-                type="string",
-                description="Line direction. '1' for Inbound (or often Southboound), '0' for Outbound (or often Northbound). Example: '1,0'.",
-            ),
-        ]
-
-        return fields
-
-
 class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points from scheduled stop events along TriMet rail routes.
@@ -336,7 +238,7 @@ class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
-class RailAmRushSummary(viewsets.ReadOnlyModelViewSet):
+class RailAmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Rail AM rush hour summary statistics.
     """
@@ -345,7 +247,7 @@ class RailAmRushSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = RailAmRushSummarySerializer
 
 
-class RailPmRushSummary(viewsets.ReadOnlyModelViewSet):
+class RailPmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Rail PM rush hour summary statistics.
     """
@@ -354,7 +256,7 @@ class RailPmRushSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = RailPmRushSummarySerializer
 
 
-class RailByStopSummary(viewsets.ReadOnlyModelViewSet):
+class RailByStopSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Rail By Stop summary statistics.
     """
@@ -363,83 +265,13 @@ class RailByStopSummary(viewsets.ReadOnlyModelViewSet):
     serializer_class = RailByStopSummarySerializer
 
 
-class RailSystemWideSummary(viewsets.ReadOnlyModelViewSet):
+class RailSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Rail System Wide summary statistics.
     """
 
     queryset = RailSystemWideSummary.objects.all()
     serializer_class = RailSystemWideSummarySerializer
-
-
-class DisturbanceStopsFilter(DjangoFilterBackend):
-    """
-    This filter is used to inject custom filter fields into the schema.
-    """
-
-    class Meta:
-        model = DisturbanceStops
-
-    def get_schema_fields(self, view):
-        fields = [
-            coreapi.Field(
-                name="months",
-                required=True,
-                location="query",
-                type="string",
-                description="Months to filter on (integer). Only September (9), October (10) and November (11) are available. Example: '9,10' to include September and October.",
-            ),
-            coreapi.Field(
-                name="time_range",
-                required=False,
-                location="query",
-                type="string",
-                description="Quarter hour time range to filter on. Example: '6.25,9.5' would filter from 6:15 am to 9:30 am",
-            ),
-            coreapi.Field(
-                name="years",
-                required=True,
-                location="query",
-                type="string",
-                description="Years to filter on. Only 2017 and 2018 are available. Example: '2017' or '2017,2018'.",
-            ),
-            coreapi.Field(
-                name="directions",
-                required=False,
-                location="query",
-                type="string",
-                description="Line direction. 'I' for Inbound, 'O' for Outbound. Example: 'I,O'.",
-            ),
-            coreapi.Field(
-                name="lines",
-                required=False,
-                location="query",
-                type="string",
-                description="Bus routes to include. Example: '10,14' for routes 10 and 14.",
-            ),
-            coreapi.Field(
-                name="service_key",
-                required=False,
-                location="query",
-                type="string",
-                description="Service Key ('W' - Weekday, 'S' - Saturday, 'U' - Sunday, 'X' - Holiday).",
-            ),
-            coreapi.Field(
-                name="bounds",
-                required=False,
-                location="query",
-                type="string",
-                description="Four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat). Example: -122.665849,45.510867,-122.653650,45.514367",
-            ),
-            coreapi.Field(
-                name="num",
-                required=False,
-                location="query",
-                type="integer",
-                description="Development only. Number of results to return so that the API doesn't hang.",
-            ),
-        ]
-        return fields
 
 
 class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
@@ -543,7 +375,7 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
-class DisturbanceSystemWideSummary(viewsets.ReadOnlyModelViewSet):
+class DisturbanceSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Disturbance System Wide summary statistics.
     """
@@ -581,7 +413,7 @@ class TmRailStopsViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = TmRailStopsSerializer
 
 
-class PassengerStopLocations(viewsets.ReadOnlyModelViewSet):
+class PassengerStopLocationsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Passenger Stop Locations.
     """
@@ -589,11 +421,12 @@ class PassengerStopLocations(viewsets.ReadOnlyModelViewSet):
     queryset = PassengerStopLocations.objects.all()
     serializer_class = PassengerStopLocationsSerializer
 
+
 class NcdbSampleTransportationCommuteViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points of Passenger Stop Locations.
     """
 
     queryset = NcdbSampleTransportationCommute.objects.all()
-    serializer_class = NcdbSampleTransportationCommuteSerializer    
+    serializer_class = NcdbSampleTransportationCommuteSerializer
     filterset_fields = ('opp_zone', )
