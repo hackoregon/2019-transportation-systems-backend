@@ -421,6 +421,8 @@ class RailByStopSummary(models.Model):
 
 class RailPassengerStops(models.Model):
     vehicle_id = models.IntegerField(blank=True, null=True)
+    train = models.IntegerField(blank=True, null=True)
+    trip_number = models.IntegerField(blank=True, null=True)
     service_date = models.DateField(blank=True, null=True)
     service_key = models.TextField(blank=True, null=True)
     arrive_time = models.DateTimeField(blank=True, null=True)
@@ -437,10 +439,19 @@ class RailPassengerStops(models.Model):
     estimated_load = models.IntegerField(blank=True, null=True)
     train_mileage = models.FloatField(blank=True, null=True)
     geom_point_4326 = models.PointField(blank=True, null=True)
-    id = models.BigIntegerField(primary_key=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    year = models.IntegerField(blank=True, null=True)
+    month = models.IntegerField(blank=True, null=True)
+    day = models.IntegerField(blank=True, null=True)
+    day_of_week = models.IntegerField(blank=True, null=True)
     seconds_late = models.IntegerField(blank=True, null=True)
     arriving_load = models.IntegerField(blank=True, null=True)
     arrive_quarter_hour = models.FloatField(blank=True, null=True)
+    previous_location_id = models.IntegerField(blank=True, null=True)
+    previous_arrive_time = models.DateTimeField(blank=True, null=True)
+    previous_train_mileage = models.FloatField(blank=True, null=True)
+    id = models.AutoField(primary_key=True)
 
     class Meta:
         managed = False

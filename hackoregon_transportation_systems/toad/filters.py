@@ -14,6 +14,20 @@ class BusPassengerStopsFilter(DjangoFilterBackend):
     def get_schema_fields(self, view):
         fields = [
             coreapi.Field(
+                name="years",
+                required=True,
+                location="query",
+                type="string",
+                description="Years to filter on. Example: '2017' or '2017,2018'.",
+            ),
+            coreapi.Field(
+                name="months",
+                required=True,
+                location="query",
+                type="string",
+                description="Months to filter on (integer). Example: '9,10' to include September and October.",
+            ),
+            coreapi.Field(
                 name="lines",
                 required=False,
                 location="query",
@@ -65,6 +79,20 @@ class RailPassengerStopsFilter(DjangoFilterBackend):
 
     def get_schema_fields(self, view):
         fields = [
+            coreapi.Field(
+                name="years",
+                required=True,
+                location="query",
+                type="string",
+                description="Years to filter on. Example: '2017' or '2017,2018'.",
+            ),
+            coreapi.Field(
+                name="months",
+                required=True,
+                location="query",
+                type="string",
+                description="Months to filter on (integer). Example: '9,10' to include September and October.",
+            ),
             coreapi.Field(
                 name="lines",
                 required=False,
