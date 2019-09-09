@@ -4,13 +4,16 @@ from toad.models import (
     BusAmRushSummary,
     BusPmRushSummary,
     BusPassengerStops,
+    BusPassengerStopsCatalog,
     BusByStopSummary,
     BusSystemWideSummary,
     RailPassengerStops,
+    RailPassengerStopsCatalog,
     RailAmRushSummary,
     RailPmRushSummary,
     RailByStopSummary,
     DisturbanceStops,
+    DisturbanceStopsCatalog,
     DisturbanceSystemWideSummary,
     TrafficSignals,
     TmRailStops,
@@ -25,13 +28,16 @@ from toad.serializers import (
     BusAmRushSummarySerializer,
     BusPmRushSummarySerializer,
     BusPassengerStopsSerializer,
+    BusPassengerStopsCatalogSerializer,
     BusSystemWideSummarySerializer,
     BusByStopSummarySerializer,
     RailPassengerStopsSerializer,
+    RailPassengerStopsCatalogSerializer,
     RailAmRushSummarySerializer,
     RailPmRushSummarySerializer,
     RailByStopSummarySerializer,
     DisturbanceStopsSerializer,
+    DisturbanceStopsCatalogSerializer,
     DisturbanceSystemWideSummarySerializer,
     TrafficSignalsSerializer,
     TmRailStopsSerializer,
@@ -324,6 +330,16 @@ class BusPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
+class BusPassengerStopsCatalogViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns a listing of the available year / month / route combinations
+    with the number of rows in the table for Bus Passenger Stops
+    """
+
+    queryset = BusPassengerStopsCatalog.objects.all()
+    serializer_class = BusPassengerStopsCatalogSerializer
+
+
 class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint returns GeoJSON points from scheduled stop events along TriMet rail routes.
@@ -415,6 +431,16 @@ class RailPassengerStopsViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = RailPassengerStops.objects.filter(**filters)
 
         return queryset
+
+
+class RailPassengerStopsCatalogViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns a listing of the available year / month / route combinations
+    with the number of rows in the table for Rail Passenger Stops
+    """
+
+    queryset = RailPassengerStopsCatalog.objects.all()
+    serializer_class = RailPassengerStopsCatalogSerializer
 
 
 class RailAmRushSummaryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -689,6 +715,16 @@ class DisturbanceStopsViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = DisturbanceStops.objects.filter(**filters)
 
         return queryset
+
+
+class DisturbanceStopsCatalogViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns a listing of the available year / month / route combinations
+    with the number of rows in the table for Disturbance Stops
+    """
+
+    queryset = DisturbanceStopsCatalog.objects.all()
+    serializer_class = DisturbanceStopsCatalogSerializer
 
 
 class DisturbanceSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
