@@ -21,6 +21,11 @@ router.register(
     r"busPassengerStops", views.BusPassengerStopsViewSet, basename="bus-passenger-stops"
 )
 router.register(
+    r"busPassengerStopsCatalog",
+    views.BusPassengerStopsCatalogViewSet,
+    basename="bus-passenger-stops-catalog"
+)
+router.register(
     r"railAmRushSummary", views.RailAmRushSummaryViewSet, basename="rail-am-rush-summary"
 )
 router.register(
@@ -40,7 +45,17 @@ router.register(
     basename="rail-passenger-stops",
 )
 router.register(
+    r"railPassengerStopsCatalog",
+    views.RailPassengerStopsCatalogViewSet,
+    basename="rail-passenger-stops-catalog",
+)
+router.register(
     r"disturbanceStops", views.DisturbanceStopsViewSet, basename="disturbance-stops"
+)
+router.register(
+    r"disturbanceStopsCatalog",
+    views.DisturbanceStopsCatalogViewSet,
+    basename="disturbance-stops-catalog"
 )
 router.register(
     r"disturbanceSystemWideSummary",

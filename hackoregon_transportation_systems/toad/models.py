@@ -138,6 +138,17 @@ class BusPassengerStops(models.Model):
         unique_together = (('service_date', 'id'),)
 
 
+class BusPassengerStopsCatalog(models.Model):
+    year = models.IntegerField(blank=True, null=True)
+    month = models.IntegerField(blank=True, null=True)
+    route_number = models.IntegerField(blank=True, null=True)
+    rows = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'bus_passenger_stops_catalog'
+
+
 class BusAmRushSummary(models.Model):
     location_id = models.IntegerField(blank=True, null=True)
     route_number = models.IntegerField(blank=True, null=True)
@@ -271,6 +282,17 @@ class DisturbanceStops(models.Model):
         managed = False
         db_table = "disturbance_stops"
         unique_together = (("opd_date", "id"),)
+
+
+class DisturbanceStopsCatalog(models.Model):
+    year = models.IntegerField(blank=True, null=True)
+    month = models.IntegerField(blank=True, null=True)
+    line_id = models.IntegerField(blank=True, null=True)
+    rows = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'disturbance_stops_catalog'
 
 
 class DisturbanceSystemWideSummary(models.Model):
@@ -457,6 +479,17 @@ class RailPassengerStops(models.Model):
         managed = False
         db_table = "rail_passenger_stops"
         unique_together = (("service_date", "id"),)
+
+
+class RailPassengerStopsCatalog(models.Model):
+    year = models.IntegerField(blank=True, null=True)
+    month = models.IntegerField(blank=True, null=True)
+    route_number = models.IntegerField(blank=True, null=True)
+    rows = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'rail_passenger_stops_catalog'
 
 
 class RailPmRushSummary(models.Model):

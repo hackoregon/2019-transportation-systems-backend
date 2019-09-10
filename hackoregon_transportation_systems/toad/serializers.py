@@ -3,10 +3,13 @@ from rest_framework_gis import serializers
 
 from toad.models import (
     DisturbanceStops,
+    DisturbanceStopsCatalog,
     DisturbanceSystemWideSummary,
     TrafficSignals,
     BusPassengerStops,
+    BusPassengerStopsCatalog,
     RailPassengerStops,
+    RailPassengerStopsCatalog,
     TmRouteStops,
     TmRailStops,
     BusAmRushSummary,
@@ -61,11 +64,25 @@ class BusPassengerStopsSerializer(serializers.GeoFeatureModelSerializer):
         id = "id"
 
 
+class BusPassengerStopsCatalogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusPassengerStopsCatalog
+        fields = "__all__"
+        id = "id"
+
+
 class RailPassengerStopsSerializer(serializers.GeoFeatureModelSerializer):
     class Meta:
         model = RailPassengerStops
         fields = "__all__"
         geo_field = "geom_point_4326"
+        id = "id"
+
+
+class RailPassengerStopsCatalogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RailPassengerStopsCatalog
+        fields = "__all__"
         id = "id"
 
 
@@ -97,6 +114,13 @@ class DisturbanceStopsSerializer(serializers.GeoFeatureModelSerializer):
         model = DisturbanceStops
         fields = "__all__"
         geo_field = "geom_point_4326"
+        id = "id"
+
+
+class DisturbanceStopsCatalogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DisturbanceStopsCatalog
+        fields = "__all__"
         id = "id"
 
 
@@ -143,6 +167,7 @@ class PassengerStopLocationsSerializer(serializers.ModelSerializer):
         model = PassengerStopLocations
         fields = "__all__"
         id = "stop_id"
+
 
 class NcdbSampleTransportationCommuteSerializer(serializers.GeoFeatureModelSerializer):
     class Meta:
