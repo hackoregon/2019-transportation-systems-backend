@@ -77,5 +77,10 @@ router.register(
     views.NcdbSampleTransportationCommuteViewSet,
     basename="ncdb-sample-transportation-commutes",
 )
+router.register(
+    r"BusstopCatchmentZoneWithCensusAttribs",
+    views.BusstopCatchmentZoneWithCensusAttribsViewSet,
+    basename="bus-stop-catchment-zone-with-census-attribs",
+)
 
 urlpatterns = [url(r"^", include(router.urls))]

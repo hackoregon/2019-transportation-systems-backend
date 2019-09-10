@@ -19,7 +19,8 @@ from toad.models import (
     TmRailStops,
     TmRouteStops,
     RailSystemWideSummary,
-    PassengerStopLocations
+    PassengerStopLocations,
+    BusstopCatchmentZoneWithCensusAttribs
 )
 
 from toad.pre_existing_models import NcdbSampleTransportationCommute
@@ -44,7 +45,8 @@ from toad.serializers import (
     TmRouteStopsSerializer,
     RailSystemWideSummarySerializer,
     PassengerStopLocationsSerializer,
-    NcdbSampleTransportationCommuteSerializer
+    NcdbSampleTransportationCommuteSerializer,
+    BusstopCatchmentZoneWithCensusAttribsSerializer
 )
 
 from toad.filters import (
@@ -56,7 +58,8 @@ from toad.filters import (
     BusByStopSummaryFilter,
     RailAmRushSummaryFilter,
     RailPmRushSummaryFilter,
-    RailByStopSummaryFilter
+    RailByStopSummaryFilter,
+    BusstopCatchmentZoneWithCensusAttribsFilter
 )
 
 
@@ -179,6 +182,58 @@ class BusSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = BusSystemWideSummary.objects.all()
     serializer_class = BusSystemWideSummarySerializer
+
+
+class BusstopCatchmentZoneWithCensusAttribsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON shape of Bus Stop Catchment Zones.
+    """
+
+    serializer_class = BusstopCatchmentZoneWithCensusAttribsSerializer
+    filter_backends = (BusstopCatchmentZoneWithCensusAttribsFilter,)
+
+    def get_queryset(self):
+        """
+        Filters against query parameters in the URL.
+        """
+
+        filters = {}
+        # really could use the assignment operator here :)
+
+        lines = self.request.query_params.get("lines", False)
+        if lines:
+            try:
+                filters["rte__in"] = [int(l) for l in lines.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"route_number": f"'{lines}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"route_number": f"'{lines}' - unknown error."})
+        directions = self.request.query_params.get("directions", False)
+        if directions:
+            try:
+                filters["dir__in"] = [int(d) for d in directions.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"dir": f"'{directions}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"dir": f"'{directions}' - unknown error."})
+        stops = self.request.query_params.get("stops", False)
+        if stops:
+            try:
+                filters["stop_id__in"] = [int(s) for s in stops.split(",")]
+            except ValueError:
+                raise ValidationError(
+                    {"stop_id": f"'{stops}' is an invalid format."}
+                )
+            except Exception:
+                raise ValidationError({"stop_id": f"'{stops}' - unknown error."})
+
+        queryset = BusstopCatchmentZoneWithCensusAttribs.objects.filter(**filters)
+
+        return queryset
 
 
 class BusByStopSummaryViewSet(viewsets.ReadOnlyModelViewSet):
