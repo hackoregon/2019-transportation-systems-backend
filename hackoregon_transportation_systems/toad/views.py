@@ -19,7 +19,8 @@ from toad.models import (
     TmRailStops,
     TmRouteStops,
     RailSystemWideSummary,
-    PassengerStopLocations
+    PassengerStopLocations,
+    BusstopCatchmentZoneWithCensusAttribs
 )
 
 from toad.pre_existing_models import NcdbSampleTransportationCommute
@@ -44,7 +45,8 @@ from toad.serializers import (
     TmRouteStopsSerializer,
     RailSystemWideSummarySerializer,
     PassengerStopLocationsSerializer,
-    NcdbSampleTransportationCommuteSerializer
+    NcdbSampleTransportationCommuteSerializer,
+    BusstopCatchmentZoneWithCensusAttribsSerializer
 )
 
 from toad.filters import (
@@ -179,6 +181,15 @@ class BusSystemWideSummaryViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = BusSystemWideSummary.objects.all()
     serializer_class = BusSystemWideSummarySerializer
+
+
+class BusstopCatchmentZoneWithCensusAttribsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This endpoint returns GeoJSON shape of Bus Stop Catchment Zones.
+    """
+
+    queryset = BusstopCatchmentZoneWithCensusAttribs.objects.all()
+    serializer_class = BusstopCatchmentZoneWithCensusAttribsSerializer
 
 
 class BusByStopSummaryViewSet(viewsets.ReadOnlyModelViewSet):

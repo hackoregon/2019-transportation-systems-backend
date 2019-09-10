@@ -213,6 +213,41 @@ class BusServiceKeys(models.Model):
         unique_together = (('service_date', 'service_key'),)
 
 
+class BusstopCatchmentZoneWithCensusAttribs(models.Model):
+    ogc_fid = models.AutoField(primary_key=True)
+    rte = models.IntegerField(blank=True, null=True)
+    dir = models.IntegerField(blank=True, null=True)
+    rte_desc = models.CharField(max_length=255, blank=True, null=True)
+    dir_desc = models.CharField(max_length=255, blank=True, null=True)
+    type = models.CharField(max_length=255, blank=True, null=True)
+    stop_seq = models.IntegerField(blank=True, null=True)
+    stop_id = models.IntegerField(blank=True, null=True)
+    stop_name = models.CharField(max_length=255, blank=True, null=True)
+    jurisdic = models.CharField(max_length=255, blank=True, null=True)
+    zipcode = models.CharField(max_length=255, blank=True, null=True)
+    frequent = models.CharField(max_length=255, blank=True, null=True)
+    medinc_17 = models.FloatField(blank=True, null=True)
+    medhomeval_17 = models.FloatField(blank=True, null=True)
+    medrentval_17 = models.FloatField(blank=True, null=True)
+    ownshare_17 = models.FloatField(blank=True, null=True)
+    whiteshare_17 = models.FloatField(blank=True, null=True)
+    blackshare_17 = models.FloatField(blank=True, null=True)
+    hispshare_17 = models.FloatField(blank=True, null=True)
+    asothshare_17 = models.FloatField(blank=True, null=True)
+    rentcbshare_17 = models.FloatField(blank=True, null=True)
+    povrate_17 = models.FloatField(blank=True, null=True)
+    bachshare_17 = models.FloatField(blank=True, null=True)
+    medinc_10 = models.FloatField(blank=True, null=True)
+    medrentval_10 = models.FloatField(blank=True, null=True)
+    povrate_10 = models.FloatField(blank=True, null=True)
+    gentr_stage_group = models.CharField(max_length=255, blank=True, null=True)
+    wkb_geometry = models.PolygonField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'busstop_catchment_zone_with_census_attribs'
+
+
 class BusSystemWideSummary(models.Model):
     arrive_quarter_hour = models.FloatField(primary_key=True)
     samples = models.BigIntegerField(blank=True, null=True)

@@ -20,7 +20,8 @@ from toad.models import (
     RailPmRushSummary,
     RailSystemWideSummary,
     RailByStopSummary,
-    PassengerStopLocations
+    PassengerStopLocations,
+    BusstopCatchmentZoneWithCensusAttribs
 )
 
 from toad.pre_existing_models import NcdbSampleTransportationCommute
@@ -69,6 +70,14 @@ class BusPassengerStopsCatalogSerializer(serializers.ModelSerializer):
         model = BusPassengerStopsCatalog
         fields = "__all__"
         id = "id"
+
+
+class BusstopCatchmentZoneWithCensusAttribsSerializer(serializers.GeoFeatureModelSerializer):
+    class Meta:
+        model = BusstopCatchmentZoneWithCensusAttribs
+        fields = "__all__"
+        geo_field = "wkb_geometry"
+        id = "ogc_fid"
 
 
 class RailPassengerStopsSerializer(serializers.GeoFeatureModelSerializer):
