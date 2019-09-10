@@ -68,6 +68,7 @@ class BusPassengerStopsCatalogSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusPassengerStopsCatalog
         fields = "__all__"
+        id = "id"
 
 
 class RailPassengerStopsSerializer(serializers.GeoFeatureModelSerializer):
@@ -82,6 +83,7 @@ class RailPassengerStopsCatalogSerializer(serializers.ModelSerializer):
     class Meta:
         model = RailPassengerStopsCatalog
         fields = "__all__"
+        id = "id"
 
 
 class RailAmRushSummarySerializer(serializers.GeoFeatureModelSerializer):
@@ -119,6 +121,7 @@ class DisturbanceStopsCatalogSerializer(serializers.ModelSerializer):
     class Meta:
         model = DisturbanceStopsCatalog
         fields = "__all__"
+        id = "id"
 
 
 class DisturbanceSystemWideSummarySerializer(serializers.ModelSerializer):
