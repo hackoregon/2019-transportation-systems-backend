@@ -10,7 +10,8 @@ from toad.models import (
     RailAmRushSummary,
     RailPmRushSummary,
     RailByStopSummary,
-    BusstopCatchmentZoneWithCensusAttribs
+    BusstopCatchmentZoneWithCensusAttribs,
+    RidershipDemographics
 )
 
 
@@ -439,6 +440,42 @@ class BusstopCatchmentZoneWithCensusAttribsFilter(DjangoFilterBackend):
                 location="query",
                 type="string",
                 description="Bus/Rail routes to include. `90` - RED, `100` - BLUE, `190` - YELLOW, `200` - GREEN, `290` - ORANGE. Example: '90,100' for the RED and BLUE lines.",
+            ),
+            coreapi.Field(
+                name="directions",
+                required=False,
+                location="query",
+                type="string",
+                description="Line direction\n\n1 for Inbound (or often Southbound)\n0 for Outbound (or often Northbound)\n\nExample:\t1,0\n\nReturns data from both directions of a route.",
+            ),
+            coreapi.Field(
+                name="stops",
+                required=False,
+                location="query",
+                type="string",
+                description="Stop ids to include, separated by a comma.\n\nExample:\tstopid1,stopid2,stopid3\n\nReturns data for only these stops.",
+            ),
+        ]
+
+        return fields
+
+
+class RidershipDemographicsFilter(DjangoFilterBackend):
+    """
+    This filter is used to inject custom filter fields into the schema.
+    """
+
+    class Meta:
+        model = RidershipDemographics
+
+    def get_schema_fields(self, view):
+        fields = [
+            coreapi.Field(
+                name="lines",
+                required=False,
+                location="query",
+                type="string",
+                description="Bus/Rail routes to include. `90` - RED, `100` - BLUE, `190` - YELLOW, `200` - GREEN. Example: '90,100' for the RED and BLUE lines.",
             ),
             coreapi.Field(
                 name="directions",
