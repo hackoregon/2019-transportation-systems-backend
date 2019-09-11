@@ -567,6 +567,42 @@ class RailSystemWideSummary(models.Model):
         db_table = 'rail_system_wide_summary'
 
 
+class RidershipDemographics(models.Model):
+    route_number = models.IntegerField(blank=True, null=True)
+    direction = models.IntegerField(blank=True, null=True)
+    location_id = models.IntegerField(blank=True, null=True)
+    rte_desc = models.CharField(max_length=255, blank=True, null=True)
+    dir_desc = models.CharField(max_length=255, blank=True, null=True)
+    type = models.CharField(max_length=255, blank=True, null=True)
+    stop_name = models.CharField(max_length=255, blank=True, null=True)
+    ons_2010 = models.BigIntegerField(blank=True, null=True)
+    ons_2017 = models.BigIntegerField(blank=True, null=True)
+    delta_ons = models.BigIntegerField(blank=True, null=True)
+    pct_chg_ons = models.FloatField(blank=True, null=True)
+    offs_2010 = models.BigIntegerField(blank=True, null=True)
+    offs_2017 = models.BigIntegerField(blank=True, null=True)
+    delta_offs = models.BigIntegerField(blank=True, null=True)
+    pct_chg_offs = models.FloatField(blank=True, null=True)
+    gentr_stage_group = models.CharField(max_length=255, blank=True, null=True)
+    medinc_10 = models.FloatField(blank=True, null=True)
+    medinc_17 = models.FloatField(blank=True, null=True)
+    delta_medinc = models.FloatField(blank=True, null=True)
+    pct_chg_medinc = models.FloatField(blank=True, null=True)
+    medrentval_10 = models.FloatField(blank=True, null=True)
+    medrentval_17 = models.FloatField(blank=True, null=True)
+    delta_medrentval = models.FloatField(blank=True, null=True)
+    pct_chg_medrentval = models.FloatField(blank=True, null=True)
+    povrate_10 = models.FloatField(blank=True, null=True)
+    povrate_17 = models.FloatField(blank=True, null=True)
+    delta_povrate = models.FloatField(blank=True, null=True)
+    pct_chg_povrate = models.FloatField(blank=True, null=True)
+    wkb_geometry = models.PolygonField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'ridership_demographics'
+
+
 class TmRailStops(models.Model):
     # inspectdb returns maxlength of -1, setting to 255 for now
     ogc_fid = models.AutoField(primary_key=True)
