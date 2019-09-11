@@ -76,6 +76,7 @@ class AuthUserUserPermissions(models.Model):
 
 class BusByStopSummary(models.Model):
     location_id = models.IntegerField(blank=True, null=True)
+    stop_name = models.CharField(max_length=255, blank=True, null=True)
     route_number = models.IntegerField(blank=True, null=True)
     direction = models.IntegerField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
@@ -151,6 +152,7 @@ class BusPassengerStopsCatalog(models.Model):
 
 class BusAmRushSummary(models.Model):
     location_id = models.IntegerField(blank=True, null=True)
+    stop_name = models.CharField(max_length=255, blank=True, null=True)
     route_number = models.IntegerField(blank=True, null=True)
     direction = models.IntegerField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
@@ -174,6 +176,7 @@ class BusAmRushSummary(models.Model):
 
 class BusPmRushSummary(models.Model):
     location_id = models.IntegerField(blank=True, null=True)
+    stop_name = models.CharField(max_length=255, blank=True, null=True)
     route_number = models.IntegerField(blank=True, null=True)
     direction = models.IntegerField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
@@ -431,6 +434,7 @@ class PassengerStopLocations(models.Model):
 
 class RailAmRushSummary(models.Model):
     location_id = models.IntegerField(blank=True, null=True)
+    stop_name = models.CharField(max_length=255, blank=True, null=True)
     route_number = models.IntegerField(blank=True, null=True)
     direction = models.IntegerField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
@@ -454,6 +458,7 @@ class RailAmRushSummary(models.Model):
 
 class RailByStopSummary(models.Model):
     location_id = models.IntegerField(blank=True, null=True)
+    stop_name = models.CharField(max_length=255, blank=True, null=True)
     route_number = models.IntegerField(blank=True, null=True)
     direction = models.IntegerField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
@@ -529,6 +534,7 @@ class RailPassengerStopsCatalog(models.Model):
 
 class RailPmRushSummary(models.Model):
     location_id = models.IntegerField(blank=True, null=True)
+    stop_name = models.CharField(max_length=255, blank=True, null=True)
     route_number = models.IntegerField(blank=True, null=True)
     direction = models.IntegerField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
